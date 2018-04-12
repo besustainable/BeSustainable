@@ -15,6 +15,7 @@ import com.example.pc_gaming.besustainable.Interface.ILoadMore;
 import com.example.pc_gaming.besustainable.Interface.OnItemClickListener;
 import com.example.pc_gaming.besustainable.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**

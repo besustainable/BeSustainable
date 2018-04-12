@@ -1,6 +1,7 @@
 package com.example.pc_gaming.besustainable.Class;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Response.Listener<JSONObject>, Response.ErrorListener {
@@ -200,6 +202,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onItemClick(Product item) {
                     Toast.makeText(getApplicationContext(), "FUNCIONA!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(), ProductActivity.class);
+                    i.putExtra("product", item.getName().toString());
+                    startActivity(i);
                 }
             });
             rvProductsList.setAdapter(adapter);

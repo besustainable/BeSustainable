@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 /**
  * Created by PC_Gaming on 17/03/2018.
  */
 
-public class Product {
+public class Product implements Serializable {
 
     private int idProduct, idPlant, idCategory, economyAVG, satisfactionAVG;
     private String name, description, origin;

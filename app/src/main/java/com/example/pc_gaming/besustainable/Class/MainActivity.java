@@ -203,7 +203,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onItemClick(Product item) {
                     Toast.makeText(getApplicationContext(), "FUNCIONA!", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), ProductActivity.class);
-                    i.putExtra("product", item.getName().toString());
+
+                    // I can't put the object because the image needs a special method for catch from the other side...
+                    i.putExtra("imageProduct", item.getImg());
+                    i.putExtra("nameProduct", item.getName().toString());
+                    i.putExtra("categoryProduct", item.getIdCategory());
+                    i.putExtra("pvpProduct", item.getPvp());
+                    i.putExtra("weightProduct", item.getWeight());
+                    i.putExtra("descriptionProduct", item.getDescription().toString());
                     startActivity(i);
                 }
             });

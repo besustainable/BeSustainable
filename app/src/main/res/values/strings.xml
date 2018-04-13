@@ -7,6 +7,7 @@
     <string name="action_settings">Settings</string>
 
     <!--IP address Server -->
-    <string name="ip">http://192.168.1.12</string>
+    <!-- Change the ip if you work by way of Local -->
+    <string name="ip">http://192.168.1.7</string>
 
 </resources>

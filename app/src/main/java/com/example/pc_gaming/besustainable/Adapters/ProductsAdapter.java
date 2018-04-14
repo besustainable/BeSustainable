@@ -110,6 +110,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         }else if(viewType == VIEW_TYPE_LOADING){
 
+
             View view = LayoutInflater.from(activity).inflate(R.layout.item_loading, parent, false);
             return new LoadingViewHolder(view);
         }
@@ -137,6 +138,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         else if(holder instanceof LoadingViewHolder){
 
+
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.pbItem.setIndeterminate(true);
 
@@ -150,7 +152,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void setLoaded(){
-
         isLoading = false;
 
     }

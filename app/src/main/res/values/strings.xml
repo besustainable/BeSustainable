@@ -6,6 +6,10 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Firebase String -->
+    <string name="default_notification_channel_id">alerts</string>
+
+
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
     <string name="ip">http://192.168.1.7</string>

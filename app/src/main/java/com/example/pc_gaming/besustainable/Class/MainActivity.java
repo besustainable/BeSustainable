@@ -193,6 +193,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 product.setDescription(jsonObject.getString("description"));
                 product.setWeight(jsonObject.getDouble("weight"));
                 product.setPvp(jsonObject.getDouble("pvp"));
+                product.setCategoryName(jsonObject.getString("Category_Name"));
+                product.setMeasure(jsonObject.getString("Measure"));
+                product.setPlantName(jsonObject.getString("Plant_Name"));
+                product.setHqName(jsonObject.getString("Hq_Name"));
                 product.setImg(jsonObject.getString("img"));
                 listProducts.add(product);
 
@@ -211,6 +215,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     i.putExtra("pvpProduct", item.getPvp());
                     i.putExtra("weightProduct", item.getWeight());
                     i.putExtra("descriptionProduct", item.getDescription().toString());
+                    i.putExtra("category_name", item.getCategoryName().toString());
+                    i.putExtra("measure", item.getMeasure().toString());
+                    i.putExtra("plant_name", item.getPlantName().toString());
+                    i.putExtra("hq_name", item.getHqName().toString());
                     startActivity(i);
                 }
             });

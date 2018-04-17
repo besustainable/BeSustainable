@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraint"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvProductName"
@@ -22,7 +22,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/berkshire_swash"
+            android:fontFamily="@font/adamina"
             android:text="Product Name"
             android:textColor="@android:color/background_dark"
             android:textSize="21sp"
@@ -88,7 +88,7 @@
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="103dp"
+            android:layout_height="90dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="40dp"
             android:layout_marginStart="40dp"
@@ -164,7 +164,7 @@
         <TextView
             android:id="@+id/tvWeight"
             android:layout_width="wrap_content"
-            android:layout_height="21dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -174,7 +174,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.738"
+            app:layout_constraintHorizontal_bias="0.796"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.098" />
@@ -193,14 +193,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.26"
-            app:srcCompat="@drawable/satisfaction_empty" />
+            app:srcCompat="@drawable/satisfaction_2" />
 
         <ImageView
             android:id="@+id/iveconomyVote"
             android:layout_width="159dp"
             android:layout_height="48dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -209,7 +208,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.26"
-            app:srcCompat="@drawable/economy_empty" />
+            app:srcCompat="@drawable/economy_4" />
 
         <ImageView
             android:id="@+id/ivrating"
@@ -371,14 +370,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_facebook_icon"
-            android:background="@android:color/transparent"/>
+            app:srcCompat="@drawable/ic_facebook_icon" />
 
 
         <ImageButton
@@ -389,14 +388,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_email_icon"
-            android:background="@android:color/transparent"/>
+            app:srcCompat="@drawable/ic_email_icon" />
 
         <ImageButton
             android:id="@+id/ibTwitter"
@@ -406,14 +405,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.50"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_twitter_icon"
-            android:background="@android:color/transparent"/>
+            app:srcCompat="@drawable/ic_twitter_icon" />
 
 
         <ImageButton
@@ -424,14 +423,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_instagram_icon"
-            android:background="@android:color/transparent"/>
+            app:srcCompat="@drawable/ic_instagram_icon" />
 
 
         <ImageButton
@@ -442,14 +441,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_whatsapp_icon"
-            android:background="@android:color/transparent"/>
+            app:srcCompat="@drawable/ic_whatsapp_icon" />
 
 
     </android.support.constraint.ConstraintLayout>

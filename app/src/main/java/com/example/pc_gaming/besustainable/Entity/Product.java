@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Product implements Serializable {
 
     private int idProduct, idPlant, idCategory, economyAVG, satisfactionAVG;
-    private String name, description, origin;
+    private String name, description, origin, categoryName, measure, plantName, hqName;
     private double weight, pvp, sustainableAVG, besustainable;
     private Bitmap img;
     private boolean ecology, fairtrade, local;
@@ -25,7 +25,7 @@ public class Product implements Serializable {
     }
 
     // OVERLOAD CONSTRUCTOR
-    public Product(int idProduct, int idPlant, int idCategory, String name, String description, double weight, double pvp, Bitmap img, double sustainableAVG, int economyAVG, int satisfactionAVG, boolean fairtrade, boolean ecology, boolean local, double besustainable,  String origin) {
+    public Product(int idProduct, int idPlant, int idCategory, int economyAVG, int satisfactionAVG, String name, String description, String origin, String categoryName, String measure, String plantName, String hqName, double weight, double pvp, double sustainableAVG, double besustainable, Bitmap img, boolean ecology, boolean fairtrade, boolean local) {
         this.idProduct = idProduct;
         this.idPlant = idPlant;
         this.idCategory = idCategory;
@@ -34,6 +34,10 @@ public class Product implements Serializable {
         this.name = name;
         this.description = description;
         this.origin = origin;
+        this.categoryName = categoryName;
+        this.measure = measure;
+        this.plantName = plantName;
+        this.hqName = hqName;
         this.weight = weight;
         this.pvp = pvp;
         this.sustainableAVG = sustainableAVG;
@@ -187,5 +191,37 @@ public class Product implements Serializable {
 
     public void setLocal(boolean local) {
         this.local = local;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(String measure) {
+        this.measure = measure;
+    }
+
+    public String getPlantName() {
+        return plantName;
+    }
+
+    public void setPlantName(String plantName) {
+        this.plantName = plantName;
+    }
+
+    public String getHqName() {
+        return hqName;
+    }
+
+    public void setHqName(String hqName) {
+        this.hqName = hqName;
     }
 }

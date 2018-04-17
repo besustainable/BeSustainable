@@ -105,14 +105,14 @@
             android:id="@+id/ivSatisfactionAVG"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/satisfaction_empty" />
+            app:srcCompat="@drawable/satisfaction_3" />
 
         <ImageView
             android:id="@+id/ivEconomyAVG"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
-            app:srcCompat="@drawable/economy_empty" />
+            app:srcCompat="@drawable/economy_5" />
 
         <TextView
             android:id="@+id/tvRating"

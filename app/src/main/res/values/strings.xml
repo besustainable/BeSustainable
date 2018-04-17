@@ -12,6 +12,6 @@
 
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
-    <string name="ip">http://192.168.1.4</string>
+    <string name="ip">http://192.168.1.14</string>
 
 </resources>

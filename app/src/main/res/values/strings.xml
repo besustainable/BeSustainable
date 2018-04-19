@@ -9,9 +9,29 @@
     <!-- Firebase String -->
     <string name="default_notification_channel_id">alerts</string>
 
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non tristique urna, non luctus ante.
+        Aliquam sit amet leo quis turpis vulputate accumsan id et nisi. Proin sem nisi, fringilla quis orci non,
+        tempor scelerisque magna. Praesent non sapien varius ante lacinia cursus in et augue. Etiam vel rutrum mauris,
+        ac tincidunt ligula. Praesent est augue, faucibus sed venenatis sed, tincidunt non risus. Donec quis placerat eros.
+        Nulla eu diam vestibulum, convallis leo in, blandit turpis. Etiam gravida ante auctor est aliquet ultricies.
+        Vestibulum quis est et urna volutpat dapibus fermentum id felis.
+
+        Morbi faucibus, erat a lobortis luctus, odio justo elementum leo, vel porttitor ipsum metus et quam. Nunc dapibus
+        ante ac libero dictum, sed sodales turpis luctus. Nulla a arcu ultrices, euismod dui in, ultrices quam. Mauris dictum
+        in dolor ut imperdiet. Aliquam non congue velit. Maecenas tincidunt eget tortor et commodo. Nullam augue eros, cursus ac ex sed,
+        interdum dignissim magna. Nulla condimentum arcu quam, sit amet imperdiet lectus ultricies ac. Orci varius natoque penatibus et magnis
+        dis parturient montes, nascetur ridiculus mus. Donec tellus risus, posuere porta congue ut, hendrerit et ligula. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Sed tempus dolor at arcu dictum, nec consequat arcu eleifend. In condimentum accumsan posuere. Vivamus id sem nec
+        nisi accumsan iaculis et id elit.
+    </string>
+
 
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
     <string name="ip">http://192.168.1.14</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

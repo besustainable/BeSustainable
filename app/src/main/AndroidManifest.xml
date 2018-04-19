@@ -25,6 +25,7 @@
         <activity
             android:name=".Class.ProductActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Class.ScreenSlidePagerActivity"></activity>
 
         <!-- Firebase -->
         <!-- [START firebase_service] -->

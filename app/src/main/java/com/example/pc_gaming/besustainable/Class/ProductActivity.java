@@ -59,6 +59,11 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Rate", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                Intent i = new Intent(getApplicationContext(), ScreenSlidePagerActivity.class);
+                startActivity(i);
+
+
             }
         });
     }

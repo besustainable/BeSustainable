@@ -198,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 product.setPlantName(jsonObject.getString("Plant_Name"));
                 product.setHqName(jsonObject.getString("Hq_Name"));
                 product.setImg(jsonObject.getString("img"));
+                product.setEconomyAVG(jsonObject.getInt("EconomyAVG"));
+                product.setSatisfactionAVG(jsonObject.getInt("satisfactionAVG"));
                 listProducts.add(product);
 
             }
@@ -219,6 +221,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     i.putExtra("measure", item.getMeasure().toString());
                     i.putExtra("plant_name", item.getPlantName().toString());
                     i.putExtra("hq_name", item.getHqName().toString());
+                    i.putExtra("satisfactionRate", item.getSatisfactionAVG());
+                    i.putExtra("economyRate", item.getEconomyAVG());
                     startActivity(i);
                 }
             });

@@ -1,6 +1,9 @@
 package com.example.pc_gaming.besustainable.Adapters;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.pc_gaming.besustainable.Class.RatingsImage;
 import com.example.pc_gaming.besustainable.Entity.Product;
 import com.example.pc_gaming.besustainable.Interface.ILoadMore;
 import com.example.pc_gaming.besustainable.Interface.OnItemClickListener;
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 class ProductsHolder extends RecyclerView.ViewHolder {
 
     TextView tvName, tvWeight, tvPvp;
-    ImageView imgProduct;
+    ImageView imgProduct, ivSatisfactionAVG, ivEconomyAVG;
 
     public ProductsHolder (View itemView){
         super(itemView);
@@ -34,7 +38,9 @@ class ProductsHolder extends RecyclerView.ViewHolder {
         tvWeight = itemView.findViewById(R.id.tvWeight);
         tvPvp = itemView.findViewById(R.id.tvPvp);
         imgProduct = itemView.findViewById(R.id.ivImgProduct);
-        //... Demás Atributos
+        ivSatisfactionAVG = itemView.findViewById(R.id.ivSatisfactionAVG);
+        ivEconomyAVG = itemView.findViewById(R.id.ivEconomyAVG);
+        //... More Attributes
     }
 
 // For OnItemClickListener()
@@ -135,6 +141,17 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else{
                 viewHolder.imgProduct.setImageResource(R.drawable.ic_photo_black_24dp);
             }
+
+            RatingsImage ratingsImage = new RatingsImage();
+
+            // Set the Votes Images
+            Bitmap bmSatisfaction = BitmapFactory.decodeResource(activity.getResources(), ratingsImage.satisfactionRate(product.getSatisfactionAVG()));
+            Bitmap bmEconomy = BitmapFactory.decodeResource(activity.getResources(), ratingsImage.economyRate(product.getEconomyAVG()));
+
+            viewHolder.ivSatisfactionAVG.setImageBitmap(bmSatisfaction);
+            viewHolder.ivEconomyAVG.setImageBitmap(bmEconomy);
+
+
         }
         else if(holder instanceof LoadingViewHolder){
 
@@ -155,9 +172,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         isLoading = false;
 
     }
-
-
-
 }
 
 

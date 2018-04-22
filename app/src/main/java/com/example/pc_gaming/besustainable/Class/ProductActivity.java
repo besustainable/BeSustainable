@@ -2,6 +2,7 @@ package com.example.pc_gaming.besustainable.Class;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,9 @@ import com.example.pc_gaming.besustainable.R;
 
 public class ProductActivity extends AppCompatActivity {
 
+    TextView tvProductName, tvPvp, tvWeight, tvDescription, tvCategory, tvHeadquarter, tvPlant;
+    ImageView ivImageProduct, ivsatisfactionVote, iveconomyVote;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,14 +27,21 @@ public class ProductActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView tvProductName = findViewById(R.id.tvProductName);
-        TextView tvPvp = findViewById(R.id.tvPvp);
-        TextView tvWeight = findViewById(R.id.tvWeight);
-        TextView tvDescription = findViewById(R.id.tvDescription);
-        TextView tvCategory = findViewById(R.id.tvCategory);
-        TextView tvHeadquarter = findViewById(R.id.tvHeadquarter);
-        TextView tvPlant = findViewById(R.id.tvPlant);
-        ImageView ivImageProduct = findViewById(R.id.ivImageProduct);
+        tvProductName = findViewById(R.id.tvProductName);
+        tvPvp = findViewById(R.id.tvPvp);
+        tvWeight = findViewById(R.id.tvWeight);
+        tvDescription = findViewById(R.id.tvDescription);
+        tvCategory = findViewById(R.id.tvCategory);
+        tvHeadquarter = findViewById(R.id.tvHeadquarter);
+        tvPlant = findViewById(R.id.tvPlant);
+        ivImageProduct = findViewById(R.id.ivImageProduct);
+
+        // ImageView Ratings & Class to Set this Votes/Rates Images
+        ivsatisfactionVote = findViewById(R.id.ivsatisfactionVote);
+        iveconomyVote = findViewById(R.id.iveconomyVote);
+
+        RatingsImage ratingsImage = new RatingsImage();
+
 
         //Collect the data from MainActivity & Adapter Event
         Bitmap bitmap = getIntent().getParcelableExtra("imageProduct");
@@ -42,6 +53,8 @@ public class ProductActivity extends AppCompatActivity {
         String plant_name = getIntent().getExtras().getString("plant_name");
         String hq_name = getIntent().getExtras().getString("hq_name");
         String description = getIntent().getExtras().getString("descriptionProduct");
+        int satisfactionRate = getIntent().getExtras().getInt("satisfactionRate");
+        int economyRate = getIntent().getExtras().getInt("economyRate");
 
         //Set data in Layout
         ivImageProduct.setImageBitmap(bitmap);
@@ -52,6 +65,15 @@ public class ProductActivity extends AppCompatActivity {
         tvPlant.setText(plant_name);
         tvHeadquarter.setText(hq_name);
         tvDescription.setText(description);
+
+        // Set the Votes Images
+        Bitmap bmSatisfaction = BitmapFactory.decodeResource(getResources(), ratingsImage.satisfactionRate(satisfactionRate));
+        Bitmap bmEconomy = BitmapFactory.decodeResource(getResources(), ratingsImage.economyRate(economyRate));
+
+        ivsatisfactionVote.setImageBitmap(bmSatisfaction);
+        iveconomyVote.setImageBitmap(bmEconomy);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

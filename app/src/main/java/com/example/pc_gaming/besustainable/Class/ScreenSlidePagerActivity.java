@@ -8,6 +8,17 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment1;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment10;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment2;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment3;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment4;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment5;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment6;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment7;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment8;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment9;
 import com.example.pc_gaming.besustainable.R;
 
 public class ScreenSlidePagerActivity extends FragmentActivity {
@@ -62,15 +73,34 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
 
-            // Tree of If/Else
+            // Tree of Switch/Case
             // Generate a Fragment per Slide (10 slides)
 
-            if(position == 0){
-
-                return new ScreenSlidePageFragment3();
+            switch (position){
+                case 0:
+                    return new ScreenSlidePageFragment();
+                case 1:
+                    return new ScreenSlidePageFragment1();
+                case 2:
+                    return new ScreenSlidePageFragment2();
+                case 3:
+                    return new ScreenSlidePageFragment3();
+                case 4:
+                    return new ScreenSlidePageFragment4();
+                case 5:
+                    return new ScreenSlidePageFragment5();
+                case 6:
+                    return new ScreenSlidePageFragment6();
+                case 7:
+                    return new ScreenSlidePageFragment7();
+                case 8:
+                    return new ScreenSlidePageFragment8();
+                case 9:
+                    return new ScreenSlidePageFragment9();
+                case 10:
+                    return new ScreenSlidePageFragment10();
             }
-
-            return new ScreenSlidePageFragment();
+            return null;
         }
 
         @Override

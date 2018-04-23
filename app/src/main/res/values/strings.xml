@@ -9,27 +9,34 @@
     <!-- Firebase String -->
     <string name="default_notification_channel_id">alerts</string>
 
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non tristique urna, non luctus ante.
-        Aliquam sit amet leo quis turpis vulputate accumsan id et nisi. Proin sem nisi, fringilla quis orci non,
-        tempor scelerisque magna. Praesent non sapien varius ante lacinia cursus in et augue. Etiam vel rutrum mauris,
-        ac tincidunt ligula. Praesent est augue, faucibus sed venenatis sed, tincidunt non risus. Donec quis placerat eros.
-        Nulla eu diam vestibulum, convallis leo in, blandit turpis. Etiam gravida ante auctor est aliquet ultricies.
-        Vestibulum quis est et urna volutpat dapibus fermentum id felis.
 
-        Morbi faucibus, erat a lobortis luctus, odio justo elementum leo, vel porttitor ipsum metus et quam. Nunc dapibus
-        ante ac libero dictum, sed sodales turpis luctus. Nulla a arcu ultrices, euismod dui in, ultrices quam. Mauris dictum
-        in dolor ut imperdiet. Aliquam non congue velit. Maecenas tincidunt eget tortor et commodo. Nullam augue eros, cursus ac ex sed,
-        interdum dignissim magna. Nulla condimentum arcu quam, sit amet imperdiet lectus ultricies ac. Orci varius natoque penatibus et magnis
-        dis parturient montes, nascetur ridiculus mus. Donec tellus risus, posuere porta congue ut, hendrerit et ligula. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Sed tempus dolor at arcu dictum, nec consequat arcu eleifend. In condimentum accumsan posuere. Vivamus id sem nec
-        nisi accumsan iaculis et id elit.
-    </string>
+    <!-- Sustainable Titles -->
+    <string name="principe1">Principle 1 – Reliability</string>
+    <string name="principe2">Principle 2 – Relevance</string>
+    <string name="principe3">Principle 3 - Clarity</string>
+    <string name="principe4">Principle 4 - Transparency</string>
+    <string name="principe5">Principle 5 - Accessibility</string>
+    <string name="principe6">Principle 6 – Three Dimensions of Sustainability</string>
+    <string name="principe7">Principle 7 – Behavior Change &amp; Longer Term Impact</string>
+    <string name="principe8">Principle 8 – Multi-channel &amp; Innovative Approach</string>
+    <string name="principe9">Principle 9 - Collaboration</string>
+    <string name="principe10">Principle 10 - Comparability</string>
 
-
+    <!-- Sustainable - Questions -->
+    <string name="principe1_Reliability">Do you see any information related to sustainability? \n If so, is it certified or supported by standardized methods, governments, NGOs or a scientific organization?</string>
+    <string name="principe2_Relevance">Is this sustainability information focused on the topics that you consider more important about sustainability taking into account the geography where it has been produced and where it will be used or consumed?</string>
+    <string name="principe3_Clarity">Is the sustainability information clear, concise and intuitive enough to understand the environmental performance of this product? Does it allow you to understand the environmental impact of the product?</string>
+    <string name="principe4_Transparency">Do you have enough information to evaluate the sustainability of the product?</string>
+    <string name="principe5_Accesibility">Is the information clearly visible? Does it offer complementary information?</string>
+    <string name="principe6_Three_Dimensions_of_Sustainability">Does the sustainability information cover environmental, social and economic aspects? Does it allow you to understand why the product is sustainable within these 3 components? </string>
+    <string name="principe7_Behavior_Change_Longer_Term_Impact">Does it advice you about how to reduce the impact on sustainability during the use and disposal of it? Does it encourage you to have a more sustainable behavior?</string>
+    <string name="principe8_Multi_Chanel_Innovate_Approach">Is the way of transmitting information about sustainability innovative? Does it offer you different channels to access it?</string>
+    <string name="principe9_Collaboration">Has the provided information taken into account the opinion and collaboration of the different groups of interest? Does this information make you feel part of a larger movement within sustainability?</string>
+    <string name="principe10_Comparability">Does it allow you to compare the product in terms of sustainability with other products in the same category or sector?</string>
+    
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
-    <string name="ip">http://192.168.1.14</string>
+    <string name="ip">http://192.168.1.10</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

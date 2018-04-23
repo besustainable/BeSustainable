@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment1;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment10;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment2;
@@ -78,26 +77,24 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
 
             switch (position){
                 case 0:
-                    return new ScreenSlidePageFragment();
-                case 1:
                     return new ScreenSlidePageFragment1();
-                case 2:
+                case 1:
                     return new ScreenSlidePageFragment2();
-                case 3:
+                case 2:
                     return new ScreenSlidePageFragment3();
-                case 4:
+                case 3:
                     return new ScreenSlidePageFragment4();
-                case 5:
+                case 4:
                     return new ScreenSlidePageFragment5();
-                case 6:
+                case 5:
                     return new ScreenSlidePageFragment6();
-                case 7:
+                case 6:
                     return new ScreenSlidePageFragment7();
-                case 8:
+                case 7:
                     return new ScreenSlidePageFragment8();
-                case 9:
+                case 8:
                     return new ScreenSlidePageFragment9();
-                case 10:
+                case 9:
                     return new ScreenSlidePageFragment10();
             }
             return null;

@@ -61,7 +61,7 @@ public class ProductActivity extends AppCompatActivity {
         tvProductName.setText(name);
         tvPvp.setText(String.valueOf(pvp + " " + "€"));
         tvWeight.setText(String.valueOf(weight) + " " + measure);
-        tvCategory.setText(categoryName);
+        tvCategory.setText(categoryName.toUpperCase());
         tvPlant.setText(plant_name);
         tvHeadquarter.setText(hq_name);
         tvDescription.setText(description);

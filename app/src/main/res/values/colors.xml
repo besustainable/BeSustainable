@@ -4,4 +4,18 @@
     <color name="colorPrimaryDark">#e4e142</color>
     <color name="colorAccent">#c6ed2a</color>
     <color name="item">#ffffff</color>
+
+    <!-- Colors of the Principles -->
+
+    <!-- 1º Principle Holo-Orange Default-->
+    <color name="Principle2">#f824ca</color>
+    <color name="Principle3">#ffb84e</color>
+    <color name="Principle4">#d41616</color>
+    <color name="Principle5">#b120b6</color>
+    <color name="Principle6">#5da2d3</color>
+    <color name="Principle7">#276634</color>
+    <color name="Principle8">#132a72</color>
+    <color name="Principle9">#1a61a7</color>
+    <!-- 10º Principle Primary App Color Default -->
+
 </resources>

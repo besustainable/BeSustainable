@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+
     <TextView
-        android:id="@+id/tvPrinciple1"
+        android:id="@+id/tvPrinciple"
         style="?android:textAppearanceMedium"
         android:layout_width="289dp"
         android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
         android:fontFamily="@font/adamina"
         android:lineSpacingMultiplier="1.2"
         android:padding="16dp"
-        android:text="@string/principe1"
+        android:text="@string/principle1"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_orange_dark"
@@ -32,7 +33,7 @@
         app:layout_constraintVertical_bias="0.018" />
 
     <ImageView
-        android:id="@+id/ivPrinciple_1"
+        android:id="@+id/ivPrinciple"
         android:layout_width="79dp"
         android:layout_height="82dp"
         android:layout_marginBottom="8dp"
@@ -55,7 +56,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/principe1_Reliability"
+        android:text="@string/principle1_Reliability"
+        android:textAlignment="center"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -67,7 +69,7 @@
         app:layout_constraintVertical_bias="0.372" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/sbPinciple"
         android:layout_width="292dp"
         android:layout_height="46dp"
         android:layout_marginBottom="8dp"
@@ -78,10 +80,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.652" />
+        app:layout_constraintVertical_bias="0.835" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvAnswer"
         android:layout_width="293dp"
         android:layout_height="58dp"
         android:layout_marginBottom="8dp"
@@ -96,14 +98,14 @@
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.823" />
+        app:layout_constraintVertical_bias="0.661" />
 
     <TableRow
         android:id="@+id/hr"
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginEnd="85dp"
+        android:layout_marginStart="85dp"
         android:background="#24952e"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,8 +116,8 @@
 
     <ImageView
         android:id="@+id/iv_Un_environment"
-        android:layout_width="87dp"
-        android:layout_height="38dp"
+        android:layout_width="97dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -130,8 +132,8 @@
 
     <ImageView
         android:id="@+id/iv_BeSustainable"
-        android:layout_width="46dp"
-        android:layout_height="38dp"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -143,5 +145,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/header" />
+
+    <TextView
+        android:id="@+id/tvPercentScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="0%"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.744" />
 
 </android.support.constraint.ConstraintLayout>

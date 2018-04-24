@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment1;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment10;
@@ -104,5 +105,6 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+
     }
 }

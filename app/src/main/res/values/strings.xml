@@ -10,33 +10,57 @@
     <string name="default_notification_channel_id">alerts</string>
 
 
-    <!-- Sustainable Titles -->
-    <string name="principe1">Principle 1 – Reliability</string>
-    <string name="principe2">Principle 2 – Relevance</string>
-    <string name="principe3">Principle 3 - Clarity</string>
-    <string name="principe4">Principle 4 - Transparency</string>
-    <string name="principe5">Principle 5 - Accessibility</string>
-    <string name="principe6">Principle 6 – Three Dimensions of Sustainability</string>
-    <string name="principe7">Principle 7 – Behavior Change &amp; Longer Term Impact</string>
-    <string name="principe8">Principle 8 – Multi-channel &amp; Innovative Approach</string>
-    <string name="principe9">Principle 9 - Collaboration</string>
-    <string name="principe10">Principle 10 - Comparability</string>
-
-    <!-- Sustainable - Questions -->
-    <string name="principe1_Reliability">Do you see any information related to sustainability? \n If so, is it certified or supported by standardized methods, governments, NGOs or a scientific organization?</string>
-    <string name="principe2_Relevance">Is this sustainability information focused on the topics that you consider more important about sustainability taking into account the geography where it has been produced and where it will be used or consumed?</string>
-    <string name="principe3_Clarity">Is the sustainability information clear, concise and intuitive enough to understand the environmental performance of this product? Does it allow you to understand the environmental impact of the product?</string>
-    <string name="principe4_Transparency">Do you have enough information to evaluate the sustainability of the product?</string>
-    <string name="principe5_Accesibility">Is the information clearly visible? Does it offer complementary information?</string>
-    <string name="principe6_Three_Dimensions_of_Sustainability">Does the sustainability information cover environmental, social and economic aspects? Does it allow you to understand why the product is sustainable within these 3 components? </string>
-    <string name="principe7_Behavior_Change_Longer_Term_Impact">Does it advice you about how to reduce the impact on sustainability during the use and disposal of it? Does it encourage you to have a more sustainable behavior?</string>
-    <string name="principe8_Multi_Chanel_Innovate_Approach">Is the way of transmitting information about sustainability innovative? Does it offer you different channels to access it?</string>
-    <string name="principe9_Collaboration">Has the provided information taken into account the opinion and collaboration of the different groups of interest? Does this information make you feel part of a larger movement within sustainability?</string>
-    <string name="principe10_Comparability">Does it allow you to compare the product in terms of sustainability with other products in the same category or sector?</string>
-    
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
-    <string name="ip">http://192.168.1.10</string>
+    <string name="ip">http://192.168.1.15</string>
+
+
+    <!-- Sustainable Titles -->
+    <string name="principle1">Principle 1 – Reliability</string>
+    <string name="principle2">Principle 2 – Relevance</string>
+    <string name="principle3">Principle 3 - Clarity</string>
+    <string name="principle4">Principle 4 - Transparency</string>
+    <string name="principle5">Principle 5 - Accessibility</string>
+    <string name="principle6">Principle 6 – Three Dimensions of Sustainability</string>
+    <string name="principle7">Principle 7 – Behavior Change &amp; Longer Term Impact</string>
+    <string name="principle8">Principle 8 – \n Multi-channel &amp; Innovative Approach</string>
+    <string name="principle9">Principle 9 - Collaboration</string>
+    <string name="principle10">Principle 10 - Comparability</string>
+
+    <!-- Sustainable - Questions -->
+    <string name="principle1_Reliability">Do you see any information related to sustainability? \n If so, is it certified or supported by standardized methods, governments, NGOs or a scientific organization?</string>
+    <string name="principle2_Relevance">Is this sustainability information focused on the topics that you consider more important about sustainability taking into account the geography where it has been produced and where it will be used or consumed?</string>
+    <string name="principle3_Clarity">Is the sustainability information clear, concise and intuitive enough to understand the environmental performance of this product? Does it allow you to understand the environmental impact of the product?</string>
+    <string name="principle4_Transparency">Do you have enough information to evaluate the sustainability of the product?</string>
+    <string name="principle5_Accesibility">Is the information clearly visible? Does it offer complementary information?</string>
+    <string name="principle6_Three_Dimensions_of_Sustainability">Does the sustainability information cover environmental, social and economic aspects? Does it allow you to understand why the product is sustainable within these 3 components? </string>
+    <string name="principle7_Behavior_Change_Longer_Term_Impact">Does it advice you about how to reduce the impact on sustainability during the use and disposal of it? Does it encourage you to have a more sustainable behavior?</string>
+    <string name="principle8_Multi_Chanel_Innovate_Approach">Is the way of transmitting information about sustainability innovative? Does it offer you different channels to access it?</string>
+    <string name="principle9_Collaboration">Has the provided information taken into account the opinion and collaboration of the different groups of interest? Does this information make you feel part of a larger movement within sustainability?</string>
+    <string name="principle10_Comparability">Does it allow you to compare the product in terms of sustainability with other products in the same category or sector?</string>
+
+    <!-- Principle Answers -->
+    <string name="AnswerP1_1">No, there isn´t any sustainability information. </string>
+    <string name="AnswerP1_2">Yes, there is certified sustainability information. </string>
+    <string name="AnswerP2_1">No, the sustainability information is not relevant. </string>
+    <string name="AnswerP2_2">Yes, the sustainability information is highly relevant.</string>
+    <string name="AnswerP3_1">No, the sustainability information is not clear. </string>
+    <string name="AnswerP3_2">Yes, it is &amp; explain how to decrease negative impacts.</string>
+    <string name="AnswerP4_1">No, the sustainability information is not enough. </string>
+    <string name="AnswerP4_2">Yes, the information is enough to evaluate the product. </string>
+    <string name="AnswerP5_1">No, the sustainability information is not clearly visible.</string>
+    <string name="AnswerP5_2">Yes, it is &amp; it is possible to access to more information also.</string>
+    <string name="AnswerP6_1">No, the sustainability information just cover one aspect.</string>
+    <string name="AnswerP6_2">Yes, it cover the three dimensions of sustainability.</string>
+    <string name="AnswerP7_1">No, there is no information about that. </string>
+    <string name="AnswerP7_2">Yes, it advice me how to reduce it.</string>
+    <string name="AnswerP8_1">No, it is no innovative and don´t offer other information´s possibilities.</string>
+    <string name="AnswerP8_2">Yes, the information is innovative and I can use different channels</string>
+    <string name="AnswerP9_1">No, there is no information about that.</string>
+    <string name="AnswerP9_2">Yes, it is an open and integral sustainability movement.</string>
+    <string name="AnswerP10_1">No, it isn´t. </string>
+    <string name="AnswerP10_2">Yes, I can clearly compare the product.</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

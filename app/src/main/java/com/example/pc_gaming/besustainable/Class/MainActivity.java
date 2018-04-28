@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                 Product product = new Product();
+                product.setIdProduct(jsonObject.getInt("idproduct"));
                 product.setName(jsonObject.optString("name"));
                 product.setDescription(jsonObject.getString("description"));
                 product.setWeight(jsonObject.getDouble("weight"));
@@ -223,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     i.putExtra("hq_name", item.getHqName().toString());
                     i.putExtra("satisfactionRate", item.getSatisfactionAVG());
                     i.putExtra("economyRate", item.getEconomyAVG());
+                    i.putExtra("idproduct", String.valueOf(item.getIdProduct()));
                     startActivity(i);
                 }
             });

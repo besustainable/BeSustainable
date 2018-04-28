@@ -68,37 +68,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.372" />
 
-    <SeekBar
-        android:id="@+id/sbPinciple"
-        android:layout_width="292dp"
-        android:layout_height="46dp"
+    <com.warkiz.widget.IndicatorSeekBar
+        android:id="@+id/indicatorseekBar"
+        android:layout_width="291dp"
+        android:layout_height="39dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.835" />
-
-    <TextView
-        android:id="@+id/tvAnswer"
-        android:layout_width="293dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
+        app:isb_indicator_color="@color/bg_custom_seekBar"
+        app:isb_indicator_stay="true"
+        app:isb_progress="50"
+        app:isb_indicator_text_color="@color/colorPrimary"
+        app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_text_1_1"
+        app:isb_indicator_text_size="19dp"
+        app:isb_indicator_type="rectangle_rounded_corner"
+        app:isb_seek_bar_type="continuous"
+        app:isb_show_indicator="true"
+        app:isb_text_color="@color/colorPrimary"
+        app:isb_text_size="18sp"
+        app:isb_thumb_color="@color/colorPrimary"
+        app:isb_thumb_progress_stay="true"
+        app:isb_thumb_width="22dp"
+        app:isb_track_background_bar_color="@color/colorPrimary"
+        app:isb_track_progress_bar_color="@color/colorPrimaryDark"
+        app:isb_track_progress_bar_size="4dp"
+        app:isb_track_rounded_corners="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.661" />
+        app:layout_constraintVertical_bias="0.768" />
 
     <TableRow
         android:id="@+id/hr"
@@ -146,23 +147,5 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/header" />
 
-    <TextView
-        android:id="@+id/tvPercentScroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="0%"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.744" />
 
 </android.support.constraint.ConstraintLayout>

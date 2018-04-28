@@ -18,4 +18,9 @@
     <color name="Principle9">#1a61a7</color>
     <!-- 10º Principle Primary App Color Default -->
 
+    <!-- Color Custom SeekBar Background -->
+    <color name="bg_custom_seekBar">#a3fdacfd</color>
+    <color name="star_satisfaction">#fce42c</color>
+    <color name="euro_economy">#24b717</color>
+
 </resources>

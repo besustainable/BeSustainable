@@ -12,7 +12,8 @@
 
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
-    <string name="ip">http://192.168.1.15</string>
+    <string name="ip">http://192.168.1.10</string>
+    <!--<string name="ip">http://212.237.6.103</string> Server -->
 
 
     <!-- Sustainable Titles -->
@@ -25,7 +26,7 @@
     <string name="principle7">Principle 7 – Behavior Change &amp; Longer Term Impact</string>
     <string name="principle8">Principle 8 – \n Multi-channel &amp; Innovative Approach</string>
     <string name="principle9">Principle 9 - Collaboration</string>
-    <string name="principle10">Principle 10 - Comparability</string>
+    <string name="principle10">Principle 10 - \n Comparability</string>
 
     <!-- Sustainable - Questions -->
     <string name="principle1_Reliability">Do you see any information related to sustainability? \n If so, is it certified or supported by standardized methods, governments, NGOs or a scientific organization?</string>
@@ -60,6 +61,18 @@
     <string name="AnswerP9_2">Yes, it is an open and integral sustainability movement.</string>
     <string name="AnswerP10_1">No, it isn´t. </string>
     <string name="AnswerP10_2">Yes, I can clearly compare the product.</string>
+
+    <!-- Satisfaction -->
+    <string name="satisfaction_title">Satisfaction</string>
+    <string name="satisfaction_answer">How satisfied are you with the quality of the product? </string>
+
+    <!--Economics -->
+    <string name="economics_title">Satisfaction</string>
+    <string name="economics_answer">Do you believe that the price is adequate? </string>
+
+    <!-- Vote Messages -->
+    <string name="message_vote">Your votation it\'s keep save succesfuly</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

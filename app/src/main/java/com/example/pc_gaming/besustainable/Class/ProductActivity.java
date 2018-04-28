@@ -19,6 +19,7 @@ public class ProductActivity extends AppCompatActivity {
 
     TextView tvProductName, tvPvp, tvWeight, tvDescription, tvCategory, tvHeadquarter, tvPlant;
     ImageView ivImageProduct, ivsatisfactionVote, iveconomyVote;
+    public static String ID_PRODUCT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class ProductActivity extends AppCompatActivity {
 
 
         //Collect the data from MainActivity & Adapter Event
+        // Implemnt Parcelable
+        ID_PRODUCT = getIntent().getExtras().getString("idproduct");
         Bitmap bitmap = getIntent().getParcelableExtra("imageProduct");
         String name = getIntent().getExtras().getString("nameProduct");
         double pvp = getIntent().getExtras().getDouble("pvpProduct");
@@ -55,6 +58,7 @@ public class ProductActivity extends AppCompatActivity {
         String description = getIntent().getExtras().getString("descriptionProduct");
         int satisfactionRate = getIntent().getExtras().getInt("satisfactionRate");
         int economyRate = getIntent().getExtras().getInt("economyRate");
+
 
         //Set data in Layout
         ivImageProduct.setImageBitmap(bitmap);

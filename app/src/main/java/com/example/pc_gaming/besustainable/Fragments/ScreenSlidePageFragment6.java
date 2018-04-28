@@ -1,7 +1,9 @@
 package com.example.pc_gaming.besustainable.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pc_gaming.besustainable.R;
+import com.warkiz.widget.IndicatorSeekBar;
 
 
 public class ScreenSlidePageFragment6 extends Fragment {
@@ -18,10 +21,8 @@ public class ScreenSlidePageFragment6 extends Fragment {
     private ImageView iv_Principle;
     private ImageView iv_Un_environment;
     private ImageView iv_BeSustainable;
-    private SeekBar sbPrinciple;
-    private TextView tvAnswer;
-    private TextView tvPercentScroll;
-    static int resultAnswer6;
+    private IndicatorSeekBar indicatorSeekBar;
+    public static int resultAnswer6 = 0;
 
 
     @Override
@@ -34,9 +35,8 @@ public class ScreenSlidePageFragment6 extends Fragment {
         iv_Principle = rootView.findViewById(R.id.ivPrinciple);
         iv_Un_environment = rootView.findViewById(R.id.iv_Un_environment);
         iv_BeSustainable = rootView.findViewById(R.id.iv_BeSustainable);
-        sbPrinciple = rootView.findViewById(R.id.sbPinciple);
-        tvAnswer = rootView.findViewById(R.id.tvAnswer);
-        tvPercentScroll = rootView.findViewById(R.id.tvPercentScroll);
+        indicatorSeekBar = rootView.findViewById(R.id.indicatorseekBar);
+
 
 
         // Sets
@@ -46,36 +46,42 @@ public class ScreenSlidePageFragment6 extends Fragment {
         iv_Principle.setImageResource(R.drawable.principle6_icon);
 
 
-        //SeekBar - Methods
-        sbPrinciple.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        indicatorSeekBar.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-                // Display the Answer
-                String result = (seekBar.getProgress() > 50) ? getString(R.string.AnswerP6_2) : getString(R.string.AnswerP6_1);
-                tvAnswer.setText(result);
-
-                // Output the Percentage
-                tvPercentScroll.setText(String.valueOf(seekBar.getProgress()) + "%");
+            public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
 
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
+            public void onSectionChanged(IndicatorSeekBar seekBar, int thumbPosOnTick, String textBelowTick, boolean fromUserTouch) {
 
             }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar, int thumbPosOnTick) {
 
-                // Set static value
+                if(seekBar.getProgress() < 50)
+                    seekBar.getBuilder().setIndicatorCustomTopContentLayout(R.layout.custom_seekbar_text_6_1).apply();
+                else
+                    seekBar.getBuilder().setIndicatorCustomTopContentLayout(R.layout.custom_seekbar_text_6_2).apply();
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+
+                if(seekBar.getProgress() < 50)
+                    seekBar.getBuilder().setIndicatorCustomTopContentLayout(R.layout.custom_seekbar_text_6_1).apply();
+                else
+                    seekBar.getBuilder().setIndicatorCustomTopContentLayout(R.layout.custom_seekbar_text_6_2).apply();
+
                 resultAnswer6 = seekBar.getProgress();
+
             }
         });
 
-
-
         return rootView;
     }
+
+
 }

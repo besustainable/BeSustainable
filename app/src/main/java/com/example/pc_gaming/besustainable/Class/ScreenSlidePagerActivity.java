@@ -1,5 +1,6 @@
 package com.example.pc_gaming.besustainable.Class;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,7 +8,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
+import android.support.v7.widget.Toolbar;
 
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment1;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment10;
@@ -19,13 +24,28 @@ import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment6;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment7;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment8;
 import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment9;
+import com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragmentResult;
 import com.example.pc_gaming.besustainable.R;
+
+
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment1.resultAnswer1;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment2.resultAnswer2;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment3.resultAnswer3;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment4.resultAnswer4;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment5.resultAnswer5;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment6.resultAnswer6;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment7.resultAnswer7;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment8.resultAnswer8;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment9.resultAnswer9;
+import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment10.resultAnswer10;
+
+import static android.app.PendingIntent.getActivity;
 
 public class ScreenSlidePagerActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 10;
+    private static final int NUM_PAGES = 11;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -57,7 +77,33 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
             super.onBackPressed();
         } else {
             // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+
+            //mPager.setCurrentItem(mPager.getCurrentItem() - 1);       Back to the last View
+            //mPager.setCurrentItem(0);                 Go to the first view
+
+            // Alert Dialog
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to cancel the Vote ? (The changes won't be save)")
+                    .setTitle("Cancel Vote")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                            resultAnswer1 = 0;resultAnswer2 = 0;resultAnswer3 = 0;resultAnswer4 = 0;resultAnswer5 = 0;
+                            resultAnswer6 = 0;resultAnswer7 = 0;resultAnswer8 = 0;resultAnswer9 = 0;resultAnswer10 = 0;
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
@@ -97,6 +143,8 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
                     return new ScreenSlidePageFragment9();
                 case 9:
                     return new ScreenSlidePageFragment10();
+                case 10:
+                    return new ScreenSlidePageFragmentResult();
             }
             return null;
         }

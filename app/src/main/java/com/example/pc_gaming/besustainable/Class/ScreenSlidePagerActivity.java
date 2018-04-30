@@ -90,9 +90,10 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            //Reset the Answer & Finish the Activity
                             finish();
-                            resultAnswer1 = 0;resultAnswer2 = 0;resultAnswer3 = 0;resultAnswer4 = 0;resultAnswer5 = 0;
-                            resultAnswer6 = 0;resultAnswer7 = 0;resultAnswer8 = 0;resultAnswer9 = 0;resultAnswer10 = 0;
+                            resultAnswer1 = 50;resultAnswer2 = 50;resultAnswer3 = 50;resultAnswer4 = 50;resultAnswer5 = 50;
+                            resultAnswer6 = 50;resultAnswer7 = 50;resultAnswer8 = 50;resultAnswer9 = 50;resultAnswer10 = 50;
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {

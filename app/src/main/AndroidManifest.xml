@@ -22,11 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Class.ProductActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Class.ScreenSlidePagerActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Class.ScreenSlidePagerActivity" />
 
         <!-- Firebase -->
         <!-- [START firebase_service] -->
@@ -63,6 +62,10 @@
             android:resource="@array/preloaded_fonts" />
         <!-- [END fcm_default_channel] -->
 
+        <activity
+            android:name=".Class.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".Class.FilterActivity"></activity>
     </application>
 
 </manifest>

@@ -1,54 +1,25 @@
 package com.example.pc_gaming.besustainable.Class;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.pc_gaming.besustainable.Adapters.ProductsAdapter;
-import com.example.pc_gaming.besustainable.Entity.Product;
-import com.example.pc_gaming.besustainable.Interface.ILoadMore;
-import com.example.pc_gaming.besustainable.Interface.OnItemClickListener;
 import com.example.pc_gaming.besustainable.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener{
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Response.Listener<JSONObject>, Response.ErrorListener {
-
-    ArrayList<Product> listProducts;
-    RecyclerView rvProductsList;
-    ProgressBar pbLoadProducts;
-    int minProduct = 0;
-    int maxProduct = 0;
-    int maxNumProducts = 61;
-
-    JsonObjectRequest jsonObjectRequest;
-    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,60 +34,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // Navigations Menu
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        listProducts = new ArrayList<Product>();
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-        pbLoadProducts = findViewById(R.id.pbLoadProducts);
-        rvProductsList = findViewById(R.id.rvProductsList);
-        rvProductsList.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
-        rvProductsList.setHasFixedSize(true);
-
-        cargarWebService();
+        // Set init App Home
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
     }
 
-    public void cargarWebService(){
-/*
-        progress=new ProgressDialog(getApplicationContext());
-        progress.setMessage("Consultando...");
-        progress.show();
-        */
-
-        String ip = getString(R.string.ip);
-
-        sacarMaxyMin();
-
-        String url = ip + "/beSustainable/loadProducts.php?minProduct=" + minProduct + "&maxProduct=" + maxProduct;
-
-        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
-
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-    }
-
-    private void sacarMaxyMin(){
-
-        if(maxProduct + 20 >= maxNumProducts){   // Max Variable
-            maxProduct = maxNumProducts;
-        }else
-            maxProduct += 20;
-
-        if(maxProduct == maxNumProducts){
-            int resto = 0;
-            while(resto >= 0){
-                resto = maxNumProducts - 20;
-                if(resto < 20)
-                    break;
-            }
-            minProduct = resto;
-        }else if(maxProduct == 20)
-            minProduct = 0;
-        else
-            minProduct += 20;
-    }
 
     @Override
     public void onBackPressed() {
@@ -128,10 +57,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        // By default it's false
+        if (menu instanceof MenuBuilder) {
+            ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        }
         return true;
     }
 
@@ -140,136 +75,81 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        Intent i = null;
+
+        switch(item.getItemId()){
+            case R.id.action_filter:
+                i = new Intent(getApplicationContext(), FilterActivity.class);
+                break;
+            case R.id.action_settings:
+                i = new Intent(getApplicationContext(), SettingsActivity.class);
+                break;
         }
+
+        startActivity(i);
 
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        Fragment fragment = null;
 
-        } else if (id == R.id.nav_slideshow) {
+        switch (item.getItemId()){
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            case R.id.nav_camera:
+                // Something
+                break;
+            case R.id.nav_gallery:
+                // Something
+                break;
+            case R.id.nav_slideshow:
+                // Something
+                break;
+            case R.id.nav_manage:
+                // Something
+                break;
+            case R.id.nav_share:
+                // Something
+                break;
+            case R.id.nav_send:
+                // Something
+                break;
+            case R.id.navigation_profile:
+                fragment = new ProfileFragment();
+                break;
+            case R.id.navigation_home:
+                fragment = new ListFragment();
+                break;
+            case R.id.navigation_categories:
+                fragment = new CategoryFragment();
+                break;
+                // By default to Home !
+            default:
+                fragment = new ListFragment();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return loadFragment(fragment);
     }
 
-    // Override Volley Methods
+    //Fragment Load
+    private boolean loadFragment(Fragment fragment){
+        if(fragment != null){
 
-    @Override
-    public void onResponse(JSONObject response) {
-
-        JSONArray json = response.optJSONArray("product");
-
-        try {
-
-            for(int i = 0; i < json.length(); i++){
-                    JSONObject jsonObject = json.getJSONObject(i);
-
-
-                Product product = new Product();
-                product.setIdProduct(jsonObject.getInt("idproduct"));
-                product.setName(jsonObject.optString("name"));
-                product.setDescription(jsonObject.getString("description"));
-                product.setWeight(jsonObject.getDouble("weight"));
-                product.setPvp(jsonObject.getDouble("pvp"));
-                product.setCategoryName(jsonObject.getString("Category_Name"));
-                product.setMeasure(jsonObject.getString("Measure"));
-                product.setPlantName(jsonObject.getString("Plant_Name"));
-                product.setHqName(jsonObject.getString("Hq_Name"));
-                product.setImg(jsonObject.getString("img"));
-                product.setEconomyAVG(jsonObject.getInt("EconomyAVG"));
-                product.setSatisfactionAVG(jsonObject.getInt("satisfactionAVG"));
-                listProducts.add(product);
-
-            }
-            //progress.hide();
-            final ProductsAdapter adapter = new ProductsAdapter(rvProductsList, this, listProducts, new OnItemClickListener() {
-                @Override
-                public void onItemClick(Product item) {
-                    Toast.makeText(getApplicationContext(), "FUNCIONA!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(), ProductActivity.class);
-
-                    // I can't put the object because the image needs a special method for catch from the other side...
-                    i.putExtra("imageProduct", item.getImg());
-                    i.putExtra("nameProduct", item.getName().toString());
-                    i.putExtra("categoryProduct", item.getIdCategory());
-                    i.putExtra("pvpProduct", item.getPvp());
-                    i.putExtra("weightProduct", item.getWeight());
-                    i.putExtra("descriptionProduct", item.getDescription().toString());
-                    i.putExtra("category_name", item.getCategoryName().toString());
-                    i.putExtra("measure", item.getMeasure().toString());
-                    i.putExtra("plant_name", item.getPlantName().toString());
-                    i.putExtra("hq_name", item.getHqName().toString());
-                    i.putExtra("satisfactionRate", item.getSatisfactionAVG());
-                    i.putExtra("economyRate", item.getEconomyAVG());
-                    i.putExtra("idproduct", String.valueOf(item.getIdProduct()));
-                    startActivity(i);
-                }
-            });
-            rvProductsList.setAdapter(adapter);
-            pbLoadProducts.setVisibility(View.INVISIBLE);
-
-            // Set Load More Event
-            adapter.setLoadMore(new ILoadMore() {
-                @Override
-                public void onLoadMore() {
-                    if(listProducts.size() < maxNumProducts) {     //Max Items in List
-                        listProducts.add(null);
-                        adapter.notifyItemInserted(listProducts.size());
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                cargarWebService();
-                                adapter.notifyDataSetChanged();
-                                adapter.setLoaded();
-
-                            }
-                        }, 2000);
-                    }else{
-                            Toast.makeText(getApplicationContext(), "Load Data Completed!", Toast.LENGTH_SHORT).show();
-                        }
-                }
-            });
-
-
-        } catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), "Error al cargar los Productos...", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-            //progress.hide();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_fragment, fragment)
+                    .commit();
+            return true;
         }
-
+        return false;
     }
 
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getApplicationContext(), "No es posible conectarse. ", Toast.LENGTH_LONG).show();
-        System.out.println();
-        pbLoadProducts.setVisibility(View.INVISIBLE);
-        Log.d("ERROR: ", error.toString());
-        //progress.hide();
-    }
+
 
 }

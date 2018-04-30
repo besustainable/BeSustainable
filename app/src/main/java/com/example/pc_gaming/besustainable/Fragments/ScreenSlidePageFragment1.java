@@ -22,7 +22,7 @@ public class ScreenSlidePageFragment1 extends Fragment {
     private ImageView iv_Un_environment;
     private ImageView iv_BeSustainable;
     private IndicatorSeekBar indicatorSeekBar;
-    public static int resultAnswer1 = 0;
+    public static int resultAnswer1 = 50;
 
 
     @Override
@@ -49,6 +49,7 @@ public class ScreenSlidePageFragment1 extends Fragment {
         indicatorSeekBar.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
+
 
             }
 

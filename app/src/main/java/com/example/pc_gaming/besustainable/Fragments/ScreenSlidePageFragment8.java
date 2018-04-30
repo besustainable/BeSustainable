@@ -22,7 +22,7 @@ public class ScreenSlidePageFragment8 extends Fragment {
     private ImageView iv_Un_environment;
     private ImageView iv_BeSustainable;
     private IndicatorSeekBar indicatorSeekBar;
-    public static int resultAnswer8 = 0;
+    public static int resultAnswer8 = 50;
 
 
     @Override
@@ -44,6 +44,7 @@ public class ScreenSlidePageFragment8 extends Fragment {
         iv_Un_environment.setImageResource(R.drawable.un_environment_icon);
         iv_BeSustainable.setImageResource(R.drawable.header);
         iv_Principle.setImageResource(R.drawable.principle8_icon);
+
 
 
         indicatorSeekBar.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {

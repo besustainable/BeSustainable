@@ -22,7 +22,7 @@ public class ScreenSlidePageFragment2 extends Fragment {
     private ImageView iv_Un_environment;
     private ImageView iv_BeSustainable;
     private IndicatorSeekBar indicatorSeekBar;
-    public static int resultAnswer2 = 0;
+    public static int resultAnswer2 = 50;
 
 
     @Override

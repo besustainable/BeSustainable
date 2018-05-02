@@ -17,12 +17,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.pc_gaming.besustainable.Adapters.ProductsAdapter;
 import com.example.pc_gaming.besustainable.Entity.Product;
+import com.example.pc_gaming.besustainable.Interface.CustomRequest;
 import com.example.pc_gaming.besustainable.Interface.ILoadMore;
 import com.example.pc_gaming.besustainable.Interface.OnItemClickListener;
 import com.example.pc_gaming.besustainable.R;
@@ -32,8 +34,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ListFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class ListFragment extends Fragment{
 
     // Main Variables
     ArrayList<Product> listProducts;
@@ -43,7 +47,8 @@ public class ListFragment extends Fragment implements Response.Listener<JSONObje
     int maxProduct = 0;
     int maxNumProducts = 61;
 
-    JsonObjectRequest jsonObjectRequest;
+    // Volley JsonObjectRequest Post request working with this helper Class
+    CustomRequest customRequest;
     ProgressDialog progress;
 
     @Override
@@ -73,17 +78,130 @@ public class ListFragment extends Fragment implements Response.Listener<JSONObje
         progress.show();
         */
 
-        String ip = getString(R.string.ip);
-
         sacarMaxyMin();
 
-        String url = ip + "/beSustainable/loadProducts.php?minProduct=" + minProduct + "&maxProduct=" + maxProduct;
+        String url = getString(R.string.ip) + "/beSustainable/loadProducts.php";
 
         Toast.makeText(getContext(), url, Toast.LENGTH_SHORT).show();
 
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
 
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+                JSONArray json = response.optJSONArray("product");
+
+                try {
+
+                    for(int i = 0; i < json.length(); i++){
+                        JSONObject jsonObject = json.getJSONObject(i);
+
+
+                        Product product = new Product();
+                        product.setIdProduct(jsonObject.getInt("idproduct"));
+                        product.setName(jsonObject.optString("name"));
+                        product.setDescription(jsonObject.getString("description"));
+                        product.setWeight(jsonObject.getDouble("weight"));
+                        product.setPvp(jsonObject.getDouble("pvp"));
+                        product.setCategoryName(jsonObject.getString("Category_Name"));
+                        product.setMeasure(jsonObject.getString("Measure"));
+                        product.setPlantName(jsonObject.getString("Plant_Name"));
+                        product.setHqName(jsonObject.getString("Hq_Name"));
+                        product.setImg(jsonObject.getString("img"));
+                        product.setEconomyAVG(jsonObject.getInt("EconomyAVG"));
+                        product.setSatisfactionAVG(jsonObject.getInt("satisfactionAVG"));
+                        listProducts.add(product);
+
+                    }
+                    //progress.hide();
+                    final ProductsAdapter adapter = new ProductsAdapter(rvProductsList, getActivity(), listProducts, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Product item) {
+                            Toast.makeText(getContext(), "FUNCIONA!", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getActivity(), ProductActivity.class);
+
+                            // I can't put the object because the image needs a special method for catch from the other side...
+                            i.putExtra("imageProduct", item.getImg());
+                            i.putExtra("nameProduct", item.getName().toString());
+                            i.putExtra("categoryProduct", item.getIdCategory());
+                            i.putExtra("pvpProduct", item.getPvp());
+                            i.putExtra("weightProduct", item.getWeight());
+                            i.putExtra("descriptionProduct", item.getDescription().toString());
+                            i.putExtra("category_name", item.getCategoryName().toString());
+                            i.putExtra("measure", item.getMeasure().toString());
+                            i.putExtra("plant_name", item.getPlantName().toString());
+                            i.putExtra("hq_name", item.getHqName().toString());
+                            i.putExtra("satisfactionRate", item.getSatisfactionAVG());
+                            i.putExtra("economyRate", item.getEconomyAVG());
+                            i.putExtra("idproduct", String.valueOf(item.getIdProduct()));
+                            startActivity(i);
+                        }
+                    });
+                    rvProductsList.setAdapter(adapter);
+                    pbLoadProducts.setVisibility(View.INVISIBLE);
+
+                    // Set Load More Event
+                    adapter.setLoadMore(new ILoadMore() {
+                        @Override
+                        public void onLoadMore() {
+                            if(listProducts.size() < maxNumProducts) {     //Max Items in List
+                                listProducts.add(null);
+                                adapter.notifyItemInserted(listProducts.size());
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        cargarWebService();
+                                        adapter.notifyDataSetChanged();
+                                        adapter.setLoaded();
+
+                                    }
+                                }, 2000);
+                            }else{
+                                Toast.makeText(getContext(), "Load Data Completed!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "Error al cargar los Productos...", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                    //progress.hide();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(), "No es posible conectarse. ", Toast.LENGTH_LONG).show();
+                System.out.println();
+                pbLoadProducts.setVisibility(View.INVISIBLE);
+                Log.d("ERROR: ", error.toString());
+                //progress.hide();
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("minProduct", String.valueOf(minProduct));
+                params.put("maxProduct", String.valueOf(maxProduct));
+                params.put("satisfaction", "");
+                params.put("economics", "");
+                params.put("totalValue", "");
+
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(customRequest);
+
     }
 
     private void sacarMaxyMin(){
@@ -106,101 +224,5 @@ public class ListFragment extends Fragment implements Response.Listener<JSONObje
         else
             minProduct += 20;
     }
-
-    @Override
-    public void onResponse(JSONObject response) {
-
-        JSONArray json = response.optJSONArray("product");
-
-        try {
-
-            for(int i = 0; i < json.length(); i++){
-                JSONObject jsonObject = json.getJSONObject(i);
-
-
-                Product product = new Product();
-                product.setIdProduct(jsonObject.getInt("idproduct"));
-                product.setName(jsonObject.optString("name"));
-                product.setDescription(jsonObject.getString("description"));
-                product.setWeight(jsonObject.getDouble("weight"));
-                product.setPvp(jsonObject.getDouble("pvp"));
-                product.setCategoryName(jsonObject.getString("Category_Name"));
-                product.setMeasure(jsonObject.getString("Measure"));
-                product.setPlantName(jsonObject.getString("Plant_Name"));
-                product.setHqName(jsonObject.getString("Hq_Name"));
-                product.setImg(jsonObject.getString("img"));
-                product.setEconomyAVG(jsonObject.getInt("EconomyAVG"));
-                product.setSatisfactionAVG(jsonObject.getInt("satisfactionAVG"));
-                listProducts.add(product);
-
-            }
-            //progress.hide();
-            final ProductsAdapter adapter = new ProductsAdapter(rvProductsList, getActivity(), listProducts, new OnItemClickListener() {
-                @Override
-                public void onItemClick(Product item) {
-                    Toast.makeText(getContext(), "FUNCIONA!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getActivity(), ProductActivity.class);
-
-                    // I can't put the object because the image needs a special method for catch from the other side...
-                    i.putExtra("imageProduct", item.getImg());
-                    i.putExtra("nameProduct", item.getName().toString());
-                    i.putExtra("categoryProduct", item.getIdCategory());
-                    i.putExtra("pvpProduct", item.getPvp());
-                    i.putExtra("weightProduct", item.getWeight());
-                    i.putExtra("descriptionProduct", item.getDescription().toString());
-                    i.putExtra("category_name", item.getCategoryName().toString());
-                    i.putExtra("measure", item.getMeasure().toString());
-                    i.putExtra("plant_name", item.getPlantName().toString());
-                    i.putExtra("hq_name", item.getHqName().toString());
-                    i.putExtra("satisfactionRate", item.getSatisfactionAVG());
-                    i.putExtra("economyRate", item.getEconomyAVG());
-                    i.putExtra("idproduct", String.valueOf(item.getIdProduct()));
-                    startActivity(i);
-                }
-            });
-            rvProductsList.setAdapter(adapter);
-            pbLoadProducts.setVisibility(View.INVISIBLE);
-
-            // Set Load More Event
-            adapter.setLoadMore(new ILoadMore() {
-                @Override
-                public void onLoadMore() {
-                    if(listProducts.size() < maxNumProducts) {     //Max Items in List
-                        listProducts.add(null);
-                        adapter.notifyItemInserted(listProducts.size());
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                cargarWebService();
-                                adapter.notifyDataSetChanged();
-                                adapter.setLoaded();
-
-                            }
-                        }, 2000);
-                    }else{
-                        Toast.makeText(getContext(), "Load Data Completed!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-
-        } catch (JSONException e) {
-            Toast.makeText(getContext(), "Error al cargar los Productos...", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-            //progress.hide();
-        }
-
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "No es posible conectarse. ", Toast.LENGTH_LONG).show();
-        System.out.println();
-        pbLoadProducts.setVisibility(View.INVISIBLE);
-        Log.d("ERROR: ", error.toString());
-        //progress.hide();
-    }
-
 
 }

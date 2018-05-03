@@ -65,7 +65,8 @@
         <activity
             android:name=".Class.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".Class.FilterActivity"></activity>
+        <activity android:name=".Class.FilterActivity" />
+        <activity android:name=".Class.ListProductsFilter"></activity>
     </application>
 
 </manifest>

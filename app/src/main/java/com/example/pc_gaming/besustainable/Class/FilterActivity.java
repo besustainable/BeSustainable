@@ -77,23 +77,22 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                // Open MainActivity for show the list
+                Intent i = new Intent(getApplicationContext(), ListProductsFilter.class);
 
                 //Get Values
                 i.putExtra("satisfaction", String.valueOf(indicatorSeekBar_satisfaction.getProgress()));
                 i.putExtra("economics", String.valueOf(indicatorSeekBar_economics.getProgress()));
-                if(!etTotalVote.getText().toString().equals(""))
-                    i.putExtra("totalvote", etTotalVote.getText().toString());
-                if(!actvCity.getText().toString().equals(""))
-                    i.putExtra("city", actvCity.getText().toString());
+                i.putExtra("totalvote", etTotalVote.getText().toString());
+                i.putExtra("city", selectedCity(actvCity.getText().toString()));
 
                 /* TESTS
                 Toast.makeText(getApplicationContext(), String.valueOf(indicatorSeekBar_satisfaction.getProgress()) + "   " +
                                                         String.valueOf(indicatorSeekBar_economics.getProgress()) + "     " +
                                                         etTotalVote.getText().toString() + "   " +
-                                                        actvCity.getText().toString(), Toast.LENGTH_LONG).show();
+                                                        selectedCity(actvCity.getText().toString()), Toast.LENGTH_LONG).show();
 
-
+                /*
                 if(!spinnerHq.getSelectedItem().toString().equals("") || spinnerHq.getSelectedItem() != null)
                     i.putExtra("headquarter",spinnerHq.getSelectedItem().toString());
                 if(!spinnerPos.getSelectedItem().toString().equals("") || spinnerPos.getSelectedItem() != null)
@@ -130,6 +129,16 @@ public class FilterActivity extends AppCompatActivity {
         spinnerHq.setAdapter(adapterHq);
         spinnerPos.setAdapter(adapterPos);
 
+    }
+
+    public String selectedCity(String nameCity){
+
+        for(City city : listCity){
+            if (nameCity.toString().equals(city.getName().toString()))
+                return String.valueOf(city.getIdCity());
+        }
+
+        return "";
     }
 
     public List loadSpinnerHeadquarter(){

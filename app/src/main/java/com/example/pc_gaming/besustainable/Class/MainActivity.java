@@ -15,6 +15,7 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.pc_gaming.besustainable.R;
 
@@ -139,12 +140,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //Fragment Load
     private boolean loadFragment(Fragment fragment){
+
+
         if(fragment != null){
 
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_fragment, fragment)
                     .commit();
+
             return true;
         }
         return false;

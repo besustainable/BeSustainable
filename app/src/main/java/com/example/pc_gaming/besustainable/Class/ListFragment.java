@@ -51,6 +51,12 @@ public class ListFragment extends Fragment{
     CustomRequest customRequest;
     ProgressDialog progress;
 
+    // Get the Arguments
+    String satisfaction = "";
+    String economics = "";
+    String totalvote= "";
+    String city = "";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +70,15 @@ public class ListFragment extends Fragment{
         rvProductsList = rootView.findViewById(R.id.rvProductsList);
         rvProductsList.setLayoutManager(new LinearLayoutManager(this.getContext()));
         rvProductsList.setHasFixedSize(true);
+
+        if(getArguments() != null){
+            satisfaction = getArguments().getString("satisfaction").toString();
+            economics = getArguments().getString("economics").toString();
+            totalvote = getArguments().getString("totalvote").toString();
+            city = getArguments().getString("city").toString();
+            Toast.makeText(getContext(), satisfaction + economics + totalvote + city, Toast.LENGTH_SHORT).show();
+        }
+
 
         cargarWebService();
 
@@ -140,27 +155,28 @@ public class ListFragment extends Fragment{
                     pbLoadProducts.setVisibility(View.INVISIBLE);
 
                     // Set Load More Event
-                    adapter.setLoadMore(new ILoadMore() {
-                        @Override
-                        public void onLoadMore() {
-                            if(listProducts.size() < maxNumProducts) {     //Max Items in List
-                                listProducts.add(null);
-                                adapter.notifyItemInserted(listProducts.size());
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
+                    if(json.length() > 5)   // Implement for jump the bug with the loader
+                        adapter.setLoadMore(new ILoadMore() {
+                            @Override
+                            public void onLoadMore() {
+                                if(listProducts.size() < maxNumProducts) {     //Max Items in List
+                                    listProducts.add(null);
+                                    adapter.notifyItemInserted(listProducts.size());
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
 
-                                        cargarWebService();
-                                        adapter.notifyDataSetChanged();
-                                        adapter.setLoaded();
+                                            cargarWebService();
+                                            adapter.notifyDataSetChanged();
+                                            adapter.setLoaded();
 
-                                    }
-                                }, 2000);
-                            }else{
-                                Toast.makeText(getContext(), "Load Data Completed!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }, 2000);
+                                }else{
+                                    Toast.makeText(getContext(), "Load Data Completed!", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
 
 
                 } catch (JSONException e) {
@@ -193,9 +209,10 @@ public class ListFragment extends Fragment{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("minProduct", String.valueOf(minProduct));
                 params.put("maxProduct", String.valueOf(maxProduct));
-                params.put("satisfaction", "");
-                params.put("economics", "");
-                params.put("totalValue", "");
+                params.put("satisfaction", satisfaction);
+                params.put("economics", economics);
+                params.put("totalvote", totalvote);
+                params.put("city", city);
 
                 return params;
             }

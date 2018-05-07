@@ -6,20 +6,43 @@ $password_localhost ="";
 
 $json=array();
 
-	$conexion = mysqli_connect($hostname_localhost,$username_localhost,$password_localhost,$database_localhost);
 
 //RECUPERO EL PRODUCTO MINIMO Y MAXIMO 
-	$minProduct = $_GET["minProduct"];
-	$maxProduct = $_GET["maxProduct"];
+	// TEST //
+	/*
+	$minProduct = 0;
+	$maxProduct = 20;
+	$satisfaction = "";
+	$economics = "";
+	$totalvote = "";
+	$city = "";
+	*/
 	
-	$consulta = "select p.*, c.name AS NAME_CATEGORY, c.measure AS MEASURE, pl.name AS PLANT_NAME, hq.name AS NAME_HQ ".
-				"FROM product p JOIN category c JOIN plant pl JOIN headquarter hq ".
-				"ON p.idcategory = c.idcategory ". 
+	$minProduct = $_POST["minProduct"];
+	$maxProduct = $_POST["maxProduct"];
+	$satisfaction = $_POST["satisfaction"];
+	$economics = $_POST["economics"];
+	$totalvote = $_POST["totalvote"];
+	$city = $_POST["city"];
+	
+	
+
+	$conn = mysqli_connect($hostname_localhost,$username_localhost,$password_localhost,$database_localhost);
+
+	
+	$sql = "select p.*, c.name AS NAME_CATEGORY, c.measure AS MEASURE, pl.name AS PLANT_NAME, hq.name AS NAME_HQ ".
+				"FROM product p JOIN category c JOIN plant pl JOIN headquarter hq JOIN city cty ".
+				"WHERE p.idcategory = c.idcategory ". 
 			    "AND p.idplant = pl.idplant ".
 				"AND pl.idhq = hq.idhq ".
-				"order by p.idproduct ".
+				"AND cty.idcity = hq.idcity ";
+
+	filters();
+
+	$sql .=		"order by p.idproduct ".
 				"limit ".$minProduct.", ".$maxProduct;
-	$resultado = mysqli_query($conexion, $consulta);
+
+	$resultado = mysqli_query($conn, $sql);
 
 	while($registro = mysqli_fetch_array($resultado)){
 		
@@ -45,7 +68,28 @@ $json=array();
 		$result["Hq_Name"] = utf8_encode($registro['NAME_HQ']); 
 		$json['product'][] = $result;
 	}
-		mysqli_close($conexion);
+		mysqli_close($conn);
 		echo json_encode($json);
+
+
+	function filters(){
+
+		if($GLOBALS['satisfaction'] != ""):
+			$GLOBALS['sql'] .= "AND p.satisfactionAVG = ".$GLOBALS['satisfaction']." ";
+		endif;
+		
+		if ($GLOBALS['economics'] != ""):
+			$GLOBALS['sql'] .= "AND p.EconomyAVG = ".$GLOBALS['economics']." ";
+		endif;
+		
+		if ($GLOBALS['totalvote'] != ""):
+			$GLOBALS['sql'] .= "AND p.sustainableAVG = ".$GLOBALS['totalvote']." ";
+		endif;
+		
+		if ($GLOBALS['city'] != ""):
+			$GLOBALS['sql'] .= "AND cty.idcity = ".$GLOBALS['city']." ";
+		endif;
+
+	}
 
 ?>

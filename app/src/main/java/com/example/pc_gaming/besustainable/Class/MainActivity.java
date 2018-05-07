@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Intent i = null;
 
         switch(item.getItemId()){
+            case R.id.action_search:
+                i = new Intent(getApplicationContext(), SearchActivity.class);
+                break;
             case R.id.action_filter:
                 i = new Intent(getApplicationContext(), FilterActivity.class);
                 break;

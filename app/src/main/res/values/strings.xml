@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_filter">Filter</string>
+    <string name="action_search">Search Product</string>
 
     <!-- Firebase String -->
     <string name="default_notification_channel_id">alerts</string>
@@ -13,7 +14,7 @@
 
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
-    <string name="ip">http://192.168.1.8</string>
+    <string name="ip">http://192.168.1.13</string>
     <!-- <string name="ip">http://80.211.191.91</string> -->
 
 

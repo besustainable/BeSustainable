@@ -85,6 +85,8 @@ public class FilterActivity extends AppCompatActivity {
                 i.putExtra("economics", String.valueOf(indicatorSeekBar_economics.getProgress()));
                 i.putExtra("totalvote", etTotalVote.getText().toString());
                 i.putExtra("city", selectedCity(actvCity.getText().toString()));
+                i.putExtra("name", "");
+                i.putExtra("category", "");
 
                 /* TESTS
                 Toast.makeText(getApplicationContext(), String.valueOf(indicatorSeekBar_satisfaction.getProgress()) + "   " +

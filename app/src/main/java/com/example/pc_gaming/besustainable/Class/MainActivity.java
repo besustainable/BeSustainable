@@ -104,23 +104,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()){
 
-            case R.id.nav_camera:
+            case R.id.nav_profile:
+                fragment = new ProfileFragment();
+                break;
+            case R.id.nav_edit_profile:
                 // Something
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_category:
+                fragment = new CategoryFragment();
+                break;
+            case R.id.nav_log_out:
                 // Something
                 break;
-            case R.id.nav_slideshow:
-                // Something
-                break;
-            case R.id.nav_manage:
+            case R.id.nav_consumption_tips:
                 // Something
                 break;
             case R.id.nav_share:
-                // Something
-                break;
-            case R.id.nav_send:
-                // Something
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Be Sustainable \n .-Empowering People through Sustainability-. \n http://80.211.191.91:8081/AlfaBeSustainable ");
+                startActivity(Intent.createChooser(intent, "Share with"));
                 break;
             case R.id.navigation_profile:
                 fragment = new ProfileFragment();

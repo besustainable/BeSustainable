@@ -57,6 +57,8 @@ public class ListFragment extends Fragment{
     String economics = "";
     String totalvote= "";
     String city = "";
+    String name = "";
+    String category = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,11 +75,15 @@ public class ListFragment extends Fragment{
         rvProductsList.setHasFixedSize(true);
 
         if(getArguments() != null){
+            //Arguments from FilterActivity
             satisfaction = getArguments().getString("satisfaction").toString();
             economics = getArguments().getString("economics").toString();
             totalvote = getArguments().getString("totalvote").toString();
             city = getArguments().getString("city").toString();
-            Toast.makeText(getContext(), satisfaction + economics + totalvote + city, Toast.LENGTH_SHORT).show();
+            // Search Product by Name
+            name = getArguments().getString("name").toString();
+            // Filter by Category
+            category = getArguments().getString("category").toString();
         }
 
 
@@ -214,6 +220,8 @@ public class ListFragment extends Fragment{
                 params.put("economics", economics);
                 params.put("totalvote", totalvote);
                 params.put("city", city);
+                params.put("name", name);
+                params.put("category", category);
 
                 return params;
             }

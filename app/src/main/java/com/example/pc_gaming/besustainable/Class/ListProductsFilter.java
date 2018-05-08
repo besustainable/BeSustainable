@@ -29,6 +29,9 @@ public class ListProductsFilter extends AppCompatActivity {
             bundle.putString("economics", getIntent().getExtras().getString("economics"));
             bundle.putString("totalvote", getIntent().getExtras().getString("totalvote"));
             bundle.putString("city", getIntent().getExtras().getString("city"));
+            bundle.putString("category", getIntent().getExtras().getString("category"));
+            // Send name empty
+            bundle.putString("name", "");
             myFragment.setArguments(bundle);
         }
     }

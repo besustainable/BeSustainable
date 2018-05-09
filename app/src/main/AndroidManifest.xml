@@ -69,9 +69,15 @@
         <activity android:name=".Class.ListProductsFilter" />
 
         <!-- No auto-focus EdtText -->
-        <activity android:name=".Class.SearchActivity"
+        <activity
+            android:name=".Class.SearchActivity"
             android:configChanges="screenSize|orientation"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Class.LoginActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

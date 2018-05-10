@@ -24,6 +24,8 @@ $json=array();
 	$economics = $_POST["economics"];
 	$totalvote = $_POST["totalvote"];
 	$city = $_POST["city"];
+	$name = $_POST["name"];
+	$category = $_POST["category"];
 	
 	
 
@@ -88,6 +90,14 @@ $json=array();
 		
 		if ($GLOBALS['city'] != ""):
 			$GLOBALS['sql'] .= "AND cty.idcity = ".$GLOBALS['city']." ";
+		endif;
+
+		if ($GLOBALS['name'] != ""):
+			$GLOBALS['sql'] .= "AND p.name LIKE '%".$GLOBALS['name']."%' ";
+		endif;
+
+		if ($GLOBALS['category'] != ""):
+			$GLOBALS['sql'] .= "AND c.idcategory = ".$GLOBALS['category']." ";
 		endif;
 
 	}

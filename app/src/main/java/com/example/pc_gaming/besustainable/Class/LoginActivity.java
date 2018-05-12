@@ -1,24 +1,31 @@
 package com.example.pc_gaming.besustainable.Class;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.pc_gaming.besustainable.Entity.Consumer;
 import com.example.pc_gaming.besustainable.Interface.CustomRequest;
 import com.example.pc_gaming.besustainable.R;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +59,9 @@ public class LoginActivity extends AppCompatActivity {
                     password = etPassword.getText().toString();
 
                     loadDataUser();
+
+
+
 
                 }else
                     Toast.makeText(getApplicationContext(), "Fill all Fields! Please :)", Toast.LENGTH_SHORT).show();
@@ -95,9 +105,38 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "EmailErrorMessage!", Toast.LENGTH_SHORT).show();
 
                     // Else Extract Info of the Consumer
-                    }else
-                        Toast.makeText(getApplicationContext(), "CONSUMER!", Toast.LENGTH_SHORT).show();
+                    }else{
 
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                        Consumer consumer = new Consumer();
+                        consumer.setIdConsumer(jsonObject.getInt("idconsumer"));
+                        consumer.setIdCity(jsonObject.getInt("idcity"));
+                        consumer.setCityName(jsonObject.getString("cityname"));
+                        consumer.setNick(jsonObject.getString("nick"));
+                        consumer.setDescription(jsonObject.getString("description"));
+                        consumer.setEmail(jsonObject.getString("email"));
+                        consumer.setBirthday(Date.valueOf(jsonObject.getString("birthday")));
+                        consumer.setGender(jsonObject.getString("gender").toLowerCase());
+                        consumer.setNewsletter(jsonObject.getBoolean("newsletter"));
+                        // No it's possible save an image in a SharedPreferences file.
+                        //consumer.setImg(jsonObject.getString("img"));
+
+                        // Save the consumer in the SharedPreferences
+                        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                        Gson gson = new Gson();
+
+                        //Cast to Json
+                        String json = gson.toJson(consumer);
+                        prefsEditor.putString("Consumer", json);
+                        prefsEditor.commit();
+
+                        // Start MainActivity
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+
+
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

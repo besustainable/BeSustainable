@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.example.pc_gaming.besustainable.Entity.Product;
 import com.example.pc_gaming.besustainable.R;
 
+import java.io.File;
+
 public class ProductActivity extends AppCompatActivity {
 
     TextView tvProductName, tvPvp, tvWeight, tvDescription, tvCategory, tvHeadquarter, tvPlant;
@@ -108,7 +110,13 @@ public class ProductActivity extends AppCompatActivity {
                 Snackbar.make(view, "Rate", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Intent i = new Intent(getApplicationContext(), ScreenSlidePagerActivity.class);
+                Intent i;
+                File filePreferences = new File("/data/data/com.example.pc_gaming.besustainable/shared_prefs/" + getString(R.string.preference_file_key) + ".xml");
+                if(!filePreferences.exists())
+                    i = new Intent(getApplicationContext(), OptionLoginActivity.class);
+                else
+                    i = new Intent(getApplicationContext(), ScreenSlidePagerActivity.class);
+
                 startActivity(i);
 
 

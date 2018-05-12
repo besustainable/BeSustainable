@@ -1,6 +1,7 @@
 package com.example.pc_gaming.besustainable.Class;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.pc_gaming.besustainable.R;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener{
 
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new CategoryFragment();
                 break;
             case R.id.nav_log_out:
-                // Something
+                closeSession();
                 break;
             case R.id.nav_consumption_tips:
                 // Something
@@ -158,6 +162,46 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             return true;
         }
         return false;
+    }
+
+    public void closeSession(){
+
+        final File deletePreferences = new File("/data/data/com.example.pc_gaming.besustainable/shared_prefs/" + getString(R.string.preference_file_key) + ".xml");
+        if(!deletePreferences.exists()){
+            // Throw the activity! OptionLoginActivity
+            Intent i = new Intent(getApplicationContext(), OptionLoginActivity.class);
+            startActivity(i);
+
+        }
+        else{
+
+            //Alert Dialog Confirm Log Out
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure to log out ?")
+                    .setTitle("Log Out")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            deletePreferences.delete();
+                            Toast.makeText(getApplicationContext(), "Log Out Completed", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+
+
+        }
+
     }
 
 

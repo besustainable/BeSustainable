@@ -1,7 +1,9 @@
 package com.example.pc_gaming.besustainable.Fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -25,7 +27,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.pc_gaming.besustainable.Class.MainActivity;
 import com.example.pc_gaming.besustainable.Class.RatingsImage;
 import com.example.pc_gaming.besustainable.Class.VolleySingleton;
+import com.example.pc_gaming.besustainable.Entity.Consumer;
 import com.example.pc_gaming.besustainable.R;
+import com.google.gson.Gson;
 import com.warkiz.widget.IndicatorSeekBar;
 
 import org.json.JSONObject;
@@ -67,6 +71,8 @@ public class ScreenSlidePageFragmentResult extends Fragment {
     // Total Variable
     double totalAV = 0;
 
+    private String ID_CONSUMER = "";
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -103,6 +109,13 @@ public class ScreenSlidePageFragmentResult extends Fragment {
         totalAV /= 100;
 
         tvVoteAVG.setText(String.valueOf(df.format(totalAV)));
+
+        // Get ID_CONSUMER
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Consumer", "");
+        Consumer consumer = gson.fromJson(json, Consumer.class);
+        ID_CONSUMER = String.valueOf(consumer.getIdConsumer());
 
 
         // Indicator_SeekBar Methods
@@ -201,7 +214,7 @@ public class ScreenSlidePageFragmentResult extends Fragment {
                         // Posting params to request url
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("idproduct", ID_PRODUCT);
-                        params.put("idconsumer", "1"); // Change User Shared Preferences ?
+                        params.put("idconsumer", ID_CONSUMER); // Change User Shared Preferences ?
                         params.put("sustainableAVG", String.valueOf(totalAV));
                         params.put("economyAVG", String.valueOf(economy_indicatorSeekBar.getProgress()));
                         params.put("satisfactionAVG", String.valueOf(satisfaction_indicatorSeekBar.getProgress()));

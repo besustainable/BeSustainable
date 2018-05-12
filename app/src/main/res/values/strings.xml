@@ -14,8 +14,14 @@
 
     <!--IP address Server -->
     <!-- Change the ip if you work by way of Local -->
-    <string name="ip">http://192.168.1.14</string>
+    <string name="ip">http://192.168.1.21</string>
     <!--<string name="ip">http://80.211.191.91</string>-->
+
+
+    <!--<string name="preference_file_key">com.example.pc_gaming.besustainable.Class.LoginActivity</string>-->
+
+    <!-- SharedPreference File (Data of User) -->
+    <string name="preference_file_key">Class.LoginActivity</string>
 
 
     <!-- Sustainable Titles -->
@@ -83,6 +89,9 @@
     <string name="title_dashboard">Category</string>
     <string name="title_profile">Profile</string>
     <string name="title_activity_settings">Settings</string>
+
+    <!--Testimonial -->
+    <string name="testimonial">Empowering People through \n Sustainability</string>
 
     <!-- Strings related to Settings -->
 

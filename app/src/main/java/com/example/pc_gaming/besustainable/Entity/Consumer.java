@@ -13,13 +13,15 @@ import java.sql.Date;
 public class Consumer {
 
     private int idConsumer, idCity;
-    private String nick, description, email, gender;
+    private String nick, description, email, gender, cityName;
     private Date birthday;
     private Bitmap img;
     private boolean newsletter;
 
+    public Consumer (){}
 
-    public Consumer(int idConsumer, int idCity, String nick, String description, String email, String gender, Date birthday, boolean newsletter, Bitmap img) {
+
+    public Consumer(int idConsumer, int idCity, String nick, String description, String email, String gender, Date birthday, boolean newsletter, Bitmap img, String cityName) {
         this.idConsumer = idConsumer;
         this.idCity = idCity;
         this.nick = nick;
@@ -29,6 +31,7 @@ public class Consumer {
         this.birthday = birthday;
         this.newsletter = newsletter;
         this.img = img;
+        this.cityName = cityName;
     }
 
     public int getIdConsumer() {
@@ -67,6 +70,13 @@ public class Consumer {
         return email;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 
     public Bitmap getImg() {
         return img;

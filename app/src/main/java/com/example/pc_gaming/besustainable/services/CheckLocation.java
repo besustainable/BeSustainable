@@ -9,6 +9,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +72,7 @@ public class CheckLocation extends Thread implements LocationListener {
                 Map userLocation = new HashMap();
                 // userLocation.put("deviceid", FirebaseInstanceId.getInstance().getToken());
                 userLocation.put("location", new JSONObject(location));
-                userLocation.put("deviceid", "prueba");
+                userLocation.put("deviceid", FirebaseInstanceId.getInstance().getToken());
 
 
                 System.out.println(new JSONObject(userLocation));

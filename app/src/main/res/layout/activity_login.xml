@@ -86,7 +86,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_border_cancel_btn"
         android:text="CANCEL ❌"
-        android:textColor="#ffffff"
+        android:textColor="@color/fbutton_color_alizarin"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

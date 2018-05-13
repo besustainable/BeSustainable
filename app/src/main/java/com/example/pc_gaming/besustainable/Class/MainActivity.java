@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.pc_gaming.besustainable.R;
-import com.example.pc_gaming.besustainable.services.ServiceLocation;
 
 import java.io.File;
 
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new ProfileFragment();
                 break;
             case R.id.nav_edit_profile:
-                // Something
+                editProfile();
                 break;
             case R.id.nav_category:
                 fragment = new CategoryFragment();
@@ -243,6 +242,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             alert.show();
 
         }
+    }
+
+    public void editProfile(){
+
+        Intent i;
+
+        final File deletePreferences = new File("/data/data/com.example.pc_gaming.besustainable/shared_prefs/" + getString(R.string.preference_file_key) + ".xml");
+        if(!deletePreferences.exists()){
+            i = new Intent(getApplicationContext(), OptionLoginActivity.class);
+        }else{
+            i = new Intent(getApplicationContext(), EditProfile.class);
+        }
+        startActivity(i);
+
     }
 
     // PERMISSIONS METODS

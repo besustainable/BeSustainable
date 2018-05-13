@@ -1,7 +1,10 @@
 package com.example.pc_gaming.besustainable.Class;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,8 +47,10 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        // Init Location Service
-        startService(new Intent(this,ServiceLocation.class));
+        // Init Location Service if has a PERMISSION_GRANTED
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED)
+            startService(new Intent(this,ServiceLocation.class));
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);

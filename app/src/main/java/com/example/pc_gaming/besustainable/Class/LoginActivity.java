@@ -44,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        // Init Location Service
+        startService(new Intent(this,ServiceLocation.class));
+
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);

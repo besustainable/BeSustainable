@@ -31,6 +31,7 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener{
 
     private final int REQUEST_PERMISSION_LOCATION = 1;
+    private final int REQUEST_ACCESS_COARSE_LOCATION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +42,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Permission to Acces to Location
         // This methos must be in the ScreenLayout
-        locationPermissions();
-
-        //Lanzar servicio
-        startService(new Intent(this,ServiceLocation.class));
-
+        locationPermissionsAccessFineLocation();
+        //locationPermissionsAccessCoarseLocation();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    private void locationPermissions() {
+    private void locationPermissionsAccessFineLocation() {
         int permissionCheck = ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -75,6 +73,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 showExplanation("Permission Needed", "We have to access to your Fine Location :)", Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_PERMISSION_LOCATION);
             } else {
                 requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_PERMISSION_LOCATION);
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void locationPermissionsAccessCoarseLocation() {
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                showExplanation("Permission Needed", "We have to access to your Coarse Location :)", Manifest.permission.ACCESS_COARSE_LOCATION, REQUEST_ACCESS_COARSE_LOCATION);
+            } else {
+                requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION, REQUEST_ACCESS_COARSE_LOCATION);
             }
         } else {
             Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();

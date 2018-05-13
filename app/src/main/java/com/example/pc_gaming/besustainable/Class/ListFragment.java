@@ -129,6 +129,7 @@ public class ListFragment extends Fragment{
                         product.setPlantName(jsonObject.getString("Plant_Name"));
                         product.setHqName(jsonObject.getString("Hq_Name"));
                         product.setImg(jsonObject.getString("img"));
+                        product.setSustainableAVG(jsonObject.getDouble("sustainableAVG"));
                         product.setEconomyAVG(jsonObject.getInt("EconomyAVG"));
                         product.setSatisfactionAVG(jsonObject.getInt("satisfactionAVG"));
                         listProducts.add(product);
@@ -138,7 +139,6 @@ public class ListFragment extends Fragment{
                     final ProductsAdapter adapter = new ProductsAdapter(rvProductsList, getActivity(), listProducts, new OnItemClickListener() {
                         @Override
                         public void onItemClick(Product item) {
-                            Toast.makeText(getContext(), "FUNCIONA!", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getActivity(), ProductActivity.class);
 
                             // I can't put the object because the image needs a special method for catch from the other side...
@@ -155,6 +155,7 @@ public class ListFragment extends Fragment{
                             i.putExtra("satisfactionRate", item.getSatisfactionAVG());
                             i.putExtra("economyRate", item.getEconomyAVG());
                             i.putExtra("idproduct", String.valueOf(item.getIdProduct()));
+                            i.putExtra("sustainableAVG", String.valueOf(item.getSustainableAVG()));
                             startActivity(i);
                         }
                     });

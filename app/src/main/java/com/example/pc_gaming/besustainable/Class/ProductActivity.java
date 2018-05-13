@@ -3,6 +3,7 @@ package com.example.pc_gaming.besustainable.Class;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pc_gaming.besustainable.Entity.Product;
 import com.example.pc_gaming.besustainable.R;
@@ -20,7 +22,7 @@ import java.io.File;
 
 public class ProductActivity extends AppCompatActivity {
 
-    TextView tvProductName, tvPvp, tvWeight, tvDescription, tvCategory, tvHeadquarter, tvPlant;
+    TextView tvProductName, tvPvp, tvWeight, tvDescription, tvCategory, tvHeadquarter, tvPlant, tvRatingProduct;
     ImageView ivImageProduct, ivsatisfactionVote, iveconomyVote;
     ImageButton ibtnFacebook, ibtnEmail, ibtnTwitter, ibtnInstagram, ibtnWhatsapp;
     public static String ID_PRODUCT;
@@ -40,6 +42,7 @@ public class ProductActivity extends AppCompatActivity {
         tvHeadquarter = findViewById(R.id.tvHeadquarter);
         tvPlant = findViewById(R.id.tvPlant);
         ivImageProduct = findViewById(R.id.ivImageProduct);
+        tvRatingProduct = findViewById(R.id.tvRatingProduct);
 
         //Image Buttons
         ibtnFacebook = findViewById(R.id.ibFacebook);
@@ -69,6 +72,7 @@ public class ProductActivity extends AppCompatActivity {
         String description = getIntent().getExtras().getString("descriptionProduct");
         final int satisfactionRate = getIntent().getExtras().getInt("satisfactionRate");
         final int economyRate = getIntent().getExtras().getInt("economyRate");
+        final String sustainableAVG = getIntent().getExtras().getString("sustainableAVG");
 
 
         //Set data in Layout
@@ -80,6 +84,7 @@ public class ProductActivity extends AppCompatActivity {
         tvPlant.setText(plant_name);
         tvHeadquarter.setText(hq_name);
         tvDescription.setText(description);
+        tvRatingProduct.setText(sustainableAVG);
 
         // Set the Votes Images
         Bitmap bmSatisfaction = BitmapFactory.decodeResource(getResources(), ratingsImage.satisfactionRate(satisfactionRate));
@@ -88,6 +93,11 @@ public class ProductActivity extends AppCompatActivity {
         ivsatisfactionVote.setImageBitmap(bmSatisfaction);
         iveconomyVote.setImageBitmap(bmEconomy);
 
+        //Messages to Share
+        final String sharedMessageWhatsapp = "*" + name + "*" + " \n" + "_" + categoryName.toUpperCase() + "_" + "\n" + satisfactionRate + "⭐  " + economyRate + " \uD83D\uDCB6  " + "Total Vote: " + sustainableAVG.toString() +  " \uD83D\uDD25 \n" + "\uD83D\uDDF3️ Vote Now!! \uD83D\uDDF3️";
+        final String sharedMessage = name + " \n" + categoryName.toUpperCase() + "\n" + satisfactionRate + "⭐  " + economyRate + " \uD83D\uDCB6  " + "Total Vote: " + sustainableAVG.toString() +  " \uD83D\uDD25 \n" + " Vote Now!! ";
+
+
         //Social Buttons Click Event Listener
 
         ibtnWhatsapp.setOnClickListener(new View.OnClickListener() {
@@ -95,10 +105,90 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, name + " \n" + categoryName + "\n" + satisfactionRate + "⭐  " + economyRate + "\uD83D\uDCB6  " + "Total Vote: " +  "\n" + "\uD83D\uDDF3️ Vote Now!! \uD83D\uDDF3️");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sharedMessageWhatsapp);
                 sendIntent.setType("text/plain");
                 sendIntent.setPackage("com.whatsapp");
-                startActivity(sendIntent);
+
+                try {
+                    startActivity(sendIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        ibtnTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sharedMessage);
+                sendIntent.setType("text/plain");
+                sendIntent.setPackage("com.twitter.android");
+
+                try {
+                    startActivity(sendIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        ibtnInstagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sharedMessage);
+                sendIntent.setType("text/plain");
+                sendIntent.setPackage("com.instagram.android");
+
+                try {
+                    startActivity(sendIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        ibtnFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sharedMessage);
+                sendIntent.setType("text/plain");
+                sendIntent.setPackage("com.facebook.katana");
+
+
+                try {
+                    startActivity(sendIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        ibtnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] TO = {""}; //aquí pon tu correo
+                String[] CC = {""};
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                // Esto podrás modificarlo si quieres, el asunto y el cuerpo del mensaje
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "BESUSTAINABLE");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, sharedMessage);
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

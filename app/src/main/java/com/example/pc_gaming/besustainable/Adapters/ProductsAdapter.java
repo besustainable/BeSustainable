@@ -29,7 +29,7 @@ import java.util.ArrayList;
 // PRODUCT HOLDER CLASS
 class ProductsHolder extends RecyclerView.ViewHolder {
 
-    TextView tvName, tvWeight, tvPvp;
+    TextView tvName, tvWeight, tvPvp, tvRating;
     ImageView imgProduct, ivSatisfactionAVG, ivEconomyAVG;
 
     public ProductsHolder (View itemView){
@@ -40,6 +40,7 @@ class ProductsHolder extends RecyclerView.ViewHolder {
         imgProduct = itemView.findViewById(R.id.ivImgProduct);
         ivSatisfactionAVG = itemView.findViewById(R.id.ivSatisfactionAVG);
         ivEconomyAVG = itemView.findViewById(R.id.ivEconomyAVG);
+        tvRating = itemView.findViewById(R.id.tvRating);
         //... More Attributes
     }
 
@@ -134,6 +135,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.tvName.setText(listProducts.get(position).getName().toString().toUpperCase());
             viewHolder.tvWeight.setText(String.valueOf(listProducts.get(position).getWeight()).toString());
             viewHolder.tvPvp.setText(String.valueOf(listProducts.get(position).getPvp()).toString() + " €");
+            viewHolder.tvRating.setText(String.valueOf(listProducts.get(position).getSustainableAVG()));
 
             // Put img if exist!
             if (listProducts.get(position).getImg() != null){

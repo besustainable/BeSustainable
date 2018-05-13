@@ -2,6 +2,7 @@ package com.example.pc_gaming.besustainable.Class;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,6 +79,9 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
 
                 performUpdate();
                 editSharedPreferences();
+
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
 
             }
         });

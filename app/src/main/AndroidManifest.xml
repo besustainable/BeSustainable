@@ -90,12 +90,13 @@
         <service
             android:name=".services.ServiceLocation"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-        <activity android:name=".Class.EditProfile"
+        <activity
+            android:name=".Class.EditProfile"
             android:configChanges="screenSize|orientation"
-            android:windowSoftInputMode="adjustPan"
-            ></activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Class.PasswordActivity"></activity>
     </application>
 
 </manifest>

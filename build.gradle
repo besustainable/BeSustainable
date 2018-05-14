@@ -21,6 +21,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //Toasty
+        maven { url "https://jitpack.io" }
     }
 }
 

@@ -96,7 +96,11 @@
             android:name=".Class.EditProfile"
             android:configChanges="screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Class.PasswordActivity"></activity>
+        <activity android:name=".Class.PasswordActivity" />
+        <activity
+            android:name=".Class.CreateConsumer"
+            android:configChanges="screenSize|orientation"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

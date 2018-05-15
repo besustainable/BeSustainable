@@ -52,9 +52,9 @@ public class PasswordActivity extends AppCompatActivity {
 
                 //Check that the password are the same
                 if(!etNewPassword.getText().toString().equals(etRepeatNewPassword.getText().toString())){
-                    Toasty.error(getApplicationContext(), "The passwords must be the same!", Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(getApplicationContext(), "The passwords must be the same!", Toast.LENGTH_SHORT, true).show();
                 }else if(etOldPassword.getText().toString().equals("")){
-                    Toasty.error(getApplicationContext(), "The old password field must be fill!", Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(getApplicationContext(), "The old password field must be fill!", Toast.LENGTH_SHORT, true).show();
                 }else{
                     updatePassword();
                 }

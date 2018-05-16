@@ -1,8 +1,5 @@
 <?PHP 
-$hostname_localhost ="localhost";
-$database_localhost ="besustainable";
-$username_localhost ="root";
-$password_localhost ="";
+include 'conn.php';
 
 	// If give back an EmailErrorMessage Exception
 	// If give back an PasswordErrorMessage Exception

@@ -26,6 +26,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.pc_gaming.besustainable.Interface.CustomRequest;
 import com.example.pc_gaming.besustainable.R;
 import com.example.pc_gaming.besustainable.services.ServiceLocation;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -151,7 +152,6 @@ public class CreateConsumer extends AppCompatActivity implements LocationListene
             public void onClick(View view) {
 
                 checkFields();
-
             }
         });
 
@@ -185,6 +185,69 @@ public class CreateConsumer extends AppCompatActivity implements LocationListene
         }else{
             performInsert();
         }
+    }
+
+    public void performInsert(){
+
+        // Request for load the Consumer Image
+        String url = getString(R.string.ip) + "/beSustainable/insertConsumer.php";
+
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+
+                    JSONArray jsonArray = response.getJSONArray("request");
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                    if(jsonObject.getString("message").toString().contains("successfully")){
+                        Toasty.success(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT, true).show();
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+                    }
+                    else{
+                        Toasty.error(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT, true).show();
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), "Error to Sign Up.", Toast.LENGTH_SHORT).show();
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("nick", etNewNick.getText().toString());
+                params.put("idcity", idcity);
+                params.put("email", etNewEmail.getText().toString());
+                params.put("description", etNewDescription.getText().toString());
+                params.put("password", etInsertPassword.getText().toString());
+                params.put("birthday", etNewBirthday.getText().toString());
+                params.put("gender", gender);
+                params.put("newsletter", newsletter);
+                return params;
+            }
+
+        };
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(customRequest);
+
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
@@ -289,10 +352,6 @@ public class CreateConsumer extends AppCompatActivity implements LocationListene
             }
         }
         return bestLocation;
-    }
-
-    public void performInsert(){
-
     }
 
     public void throwMessage(String message){

@@ -28,16 +28,21 @@ import com.example.pc_gaming.besustainable.Class.MainActivity;
 import com.example.pc_gaming.besustainable.Class.RatingsImage;
 import com.example.pc_gaming.besustainable.Class.VolleySingleton;
 import com.example.pc_gaming.besustainable.Entity.Consumer;
+import com.example.pc_gaming.besustainable.Interface.CustomRequest;
 import com.example.pc_gaming.besustainable.R;
 import com.google.gson.Gson;
 import com.warkiz.widget.IndicatorSeekBar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 import static com.example.pc_gaming.besustainable.Class.ProductActivity.ID_PRODUCT;
 import static com.example.pc_gaming.besustainable.Fragments.ScreenSlidePageFragment1.resultAnswer1;
@@ -185,6 +190,8 @@ public class ScreenSlidePageFragmentResult extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
+                        updateSusatinableAVGProduct();
+
                         // AlertDialog Succesfully
                         AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
                         builder.setTitle("Vote Succesfuly!")
@@ -229,4 +236,40 @@ public class ScreenSlidePageFragmentResult extends Fragment {
 
         return rootView;
     }
+
+    public void updateSusatinableAVGProduct(){
+
+        // Request for load the Consumer Image
+        String url = getString(R.string.ip) + "/beSustainable/updateSustainableAVG.php";
+
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                // Update Perform
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idproduct", ID_PRODUCT);
+                return params;
+            }
+
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(customRequest);
+
+    }
+
 }

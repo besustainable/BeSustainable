@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ class ProductsHolder extends RecyclerView.ViewHolder {
 
     TextView tvName, tvWeight, tvPvp, tvRating;
     ImageView imgProduct, ivSatisfactionAVG, ivEconomyAVG;
+    LinearLayout layout_background;
 
     public ProductsHolder (View itemView){
         super(itemView);
@@ -41,6 +44,7 @@ class ProductsHolder extends RecyclerView.ViewHolder {
         ivSatisfactionAVG = itemView.findViewById(R.id.ivSatisfactionAVG);
         ivEconomyAVG = itemView.findViewById(R.id.ivEconomyAVG);
         tvRating = itemView.findViewById(R.id.tvRating);
+        layout_background = itemView.findViewById(R.id.layout_background);
         //... More Attributes
     }
 
@@ -136,6 +140,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.tvWeight.setText(String.valueOf(listProducts.get(position).getWeight()).toString());
             viewHolder.tvPvp.setText(String.valueOf(listProducts.get(position).getPvp()).toString() + " €");
             viewHolder.tvRating.setText(String.valueOf(listProducts.get(position).getSustainableAVG()));
+
+            if(position % 2 == 0)
+                viewHolder.layout_background.setBackgroundColor(Color.argb(5, 180, 247, 175));
 
             // Put img if exist!
             if (listProducts.get(position).getImg() != null){

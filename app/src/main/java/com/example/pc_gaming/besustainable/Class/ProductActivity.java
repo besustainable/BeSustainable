@@ -1,12 +1,16 @@
 package com.example.pc_gaming.besustainable.Class;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,10 +19,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.pc_gaming.besustainable.Entity.Consumer;
 import com.example.pc_gaming.besustainable.Entity.Product;
+import com.example.pc_gaming.besustainable.Interface.CustomRequest;
 import com.example.pc_gaming.besustainable.R;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -26,6 +45,9 @@ public class ProductActivity extends AppCompatActivity {
     ImageView ivImageProduct, ivsatisfactionVote, iveconomyVote;
     ImageButton ibtnFacebook, ibtnEmail, ibtnTwitter, ibtnInstagram, ibtnWhatsapp;
     public static String ID_PRODUCT;
+
+    // For Check the repeat votation.
+    String ID_CONSUMER = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,20 +219,136 @@ public class ProductActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Rate", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
                 Intent i;
                 File filePreferences = new File("/data/data/com.example.pc_gaming.besustainable/shared_prefs/" + getString(R.string.preference_file_key) + ".xml");
-                if(!filePreferences.exists())
+                if(!filePreferences.exists()) {
                     i = new Intent(getApplicationContext(), OptionLoginActivity.class);
-                else
-                    i = new Intent(getApplicationContext(), ScreenSlidePagerActivity.class);
-
-                startActivity(i);
-
-
+                    startActivity(i);
+                }
+                else {
+                    ID_CONSUMER = String.valueOf(getIdConsumer());
+                    repeatVote();
+                }
             }
         });
     }
+
+    public void repeatVote(){
+
+        // Request for load the Consumer Image
+        String url = getString(R.string.ip) + "/beSustainable/checkRepeatVotation.php";
+        final boolean[] votationRepeat = new boolean[1];
+
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+
+                    if(response.getString("message").toString().equals("true")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ProductActivity.this);
+                        builder.setMessage("You already vote this product. \n Do you wanna repeat the votation? ")
+                                .setTitle("Repeat Vote")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //Reset the Answer & Finish the Activity
+                                        deleteVotation();
+                                        Intent ii = new Intent(getApplicationContext(), ScreenSlidePagerActivity.class);
+                                        startActivity(ii);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                    else{
+                        Intent i = new Intent(getApplicationContext(), ScreenSlidePagerActivity.class);
+                        startActivity(i);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idproduct", ID_PRODUCT);
+                params.put("idconsumer", ID_CONSUMER);
+                return params;
+            }
+
+        };
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(customRequest);
+    }
+
+    public void deleteVotation(){
+
+        // Request for load the Consumer Image
+        String url = getString(R.string.ip) + "/beSustainable/deleteVotation.php";
+        final boolean[] votationRepeat = new boolean[1];
+
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                // All works fine
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idproduct", ID_PRODUCT);
+                params.put("idconsumer", ID_CONSUMER);
+                return params;
+            }
+
+        };
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(customRequest);
+
+    }
+
+    public int getIdConsumer(){
+        //Get Shared Preferences
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Consumer", "");
+        Consumer consumer = gson.fromJson(json, Consumer.class);
+
+        return consumer.getIdConsumer();
+    }
+
 }

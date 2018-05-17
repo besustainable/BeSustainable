@@ -34,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -129,7 +131,11 @@ public class ListFragment extends Fragment{
                         product.setPlantName(jsonObject.getString("Plant_Name"));
                         product.setHqName(jsonObject.getString("Hq_Name"));
                         product.setImg(jsonObject.getString("img"));
-                        product.setSustainableAVG(jsonObject.getDouble("sustainableAVG"));
+                        //Rounded
+                        DecimalFormat df = new DecimalFormat("#.#");
+                        df.setRoundingMode(RoundingMode.CEILING);
+                        String sustainableAVG = df.format(jsonObject.getDouble("sustainableAVG"));
+                        product.setSustainableAVG(Double.parseDouble(sustainableAVG.replace(',', '.')));
                         product.setEconomyAVG(jsonObject.getInt("EconomyAVG"));
                         product.setSatisfactionAVG(jsonObject.getInt("satisfactionAVG"));
                         listProducts.add(product);

@@ -47,11 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        // Init Location Service if has a PERMISSION_GRANTED
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED)
-            startService(new Intent(this,ServiceLocation.class));
-
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);

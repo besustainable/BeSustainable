@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.pc_gaming.besustainable.R;
+import com.example.pc_gaming.besustainable.services.ServiceLocation;
 
 import java.io.File;
 
@@ -43,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // This methos must be in the ScreenLayout
         locationPermissionsAccessFineLocation();
         //locationPermissionsAccessCoarseLocation();
+
+        // Init Location Service if has a PERMISSION_GRANTED
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED)
+            startService(new Intent(this,ServiceLocation.class));
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

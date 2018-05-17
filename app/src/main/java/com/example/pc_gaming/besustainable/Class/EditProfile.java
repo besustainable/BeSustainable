@@ -45,6 +45,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 public class EditProfile extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     //Components
@@ -267,7 +269,7 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -275,7 +277,7 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), "Error to load the Profile Image.", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "Error to load the Profile Image.", Toast.LENGTH_SHORT, true).show();
 
             }
         }) {
@@ -310,11 +312,11 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
                     JSONArray jsonArray = response.getJSONArray("request");
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                    Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT, true).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -322,7 +324,7 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), "Error to perform the Update.", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "Error to perform the Update.", Toast.LENGTH_SHORT, true).show();
 
             }
         }) {
@@ -390,11 +392,11 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
                     JSONArray jsonArray = response.getJSONArray("request");
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                    Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT, true).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -402,7 +404,7 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), "Error to Update Image Profile.", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "Error to Update Image Profile.", Toast.LENGTH_SHORT, true).show();
 
             }
         }) {

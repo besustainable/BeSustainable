@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.pc_gaming.besustainable.R;
 
+import es.dmoral.toasty.Toasty;
+
 public class SearchActivity extends AppCompatActivity {
 
     EditText etSearchProduct;
@@ -59,7 +61,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                 }else {
-                    Toast.makeText(getApplicationContext(), "Enter a Product Name!", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "Enter a Product Name!", Toast.LENGTH_SHORT, true).show();
                 }
 
             }

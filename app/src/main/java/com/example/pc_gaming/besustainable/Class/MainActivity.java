@@ -28,6 +28,8 @@ import com.example.pc_gaming.besustainable.services.ServiceLocation;
 
 import java.io.File;
 
+import es.dmoral.toasty.Toasty;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener{
 
     private final int REQUEST_PERMISSION_LOCATION = 1;
@@ -80,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_PERMISSION_LOCATION);
             }
         } else {
-            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -95,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION, REQUEST_ACCESS_COARSE_LOCATION);
             }
         } else {
-            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             deletePreferences.delete();
-                            Toast.makeText(getApplicationContext(), "Log Out Completed", Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "Log Out Completed", Toast.LENGTH_SHORT, true).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }
@@ -275,9 +275,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case REQUEST_PERMISSION_LOCATION:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
         }
     }

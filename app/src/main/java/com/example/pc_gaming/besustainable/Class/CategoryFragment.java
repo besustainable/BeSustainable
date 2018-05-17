@@ -26,6 +26,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class CategoryFragment extends Fragment {
 
     GridView gridview;
@@ -104,7 +106,7 @@ public class CategoryFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error Loading the Categories...", Toast.LENGTH_SHORT ).show();
+                Toasty.error(getContext(), "Error Loading the Categories...", Toast.LENGTH_SHORT, true).show();
             }
         });
         VolleySingleton.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);

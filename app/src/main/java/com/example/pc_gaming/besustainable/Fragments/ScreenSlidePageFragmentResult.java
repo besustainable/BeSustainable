@@ -212,7 +212,7 @@ public class ScreenSlidePageFragmentResult extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getContext(), "Error", Toast.LENGTH_SHORT, true).show();
 
                     }
                 }) {

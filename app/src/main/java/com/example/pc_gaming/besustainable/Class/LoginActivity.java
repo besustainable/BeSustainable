@@ -33,6 +33,8 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText etPassword, etEmail;
@@ -68,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 }else
-                    Toast.makeText(getApplicationContext(), "Fill all Fields! Please :)", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "Fill all Fields! Please :)", Toast.LENGTH_SHORT, true).show();
 
             }
         });
@@ -104,9 +106,9 @@ public class LoginActivity extends AppCompatActivity {
                     if(jsonArray.length() == 1){
 
                         if(jsonArray.getJSONObject(0).getString("ErrorMessage").equals("PasswordErrorMessage"))
-                            Toast.makeText(getApplicationContext(), "Password Error!", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getApplicationContext(), "Password Error!", Toast.LENGTH_SHORT, true).show();
                         else
-                            Toast.makeText(getApplicationContext(), "EmailErrorMessage!", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getApplicationContext(), "Email Error!", Toast.LENGTH_SHORT, true).show();
 
                     // Else Extract Info of the Consumer
                     }else{
@@ -144,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -152,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), "Login Error ", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "Login Error ", Toast.LENGTH_SHORT, true).show();
 
             }
         }) {

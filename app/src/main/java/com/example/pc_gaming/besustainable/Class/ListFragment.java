@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 public class ListFragment extends Fragment{
 
     // Main Variables
@@ -106,7 +108,7 @@ public class ListFragment extends Fragment{
 
         String url = getString(R.string.ip) + "/beSustainable/loadProducts.php";
 
-        Toast.makeText(getContext(), url, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), url, Toast.LENGTH_SHORT).show();
 
         customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -187,14 +189,14 @@ public class ListFragment extends Fragment{
                                         }
                                     }, 2000);
                                 }else{
-                                    Toast.makeText(getContext(), "Load Data Completed!", Toast.LENGTH_SHORT).show();
+                                    //Toasty.success(getContext(), "Load Data Completed!", Toast.LENGTH_SHORT, true).show();
                                 }
                             }
                         });
 
 
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "Error al cargar los Productos...", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "Error al cargar los Productos...", Toast.LENGTH_SHORT, true).show();
                     e.printStackTrace();
                     //progress.hide();
                 }
@@ -205,7 +207,7 @@ public class ListFragment extends Fragment{
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getContext(), "No es posible conectarse. ", Toast.LENGTH_LONG).show();
+                Toasty.error(getContext(), "No es posible conectarse. ", Toast.LENGTH_LONG, true).show();
                 System.out.println();
                 pbLoadProducts.setVisibility(View.INVISIBLE);
                 Log.d("ERROR: ", error.toString());

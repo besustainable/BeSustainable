@@ -214,7 +214,7 @@ public class CreateConsumer extends AppCompatActivity implements LocationListene
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -222,7 +222,7 @@ public class CreateConsumer extends AppCompatActivity implements LocationListene
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), "Error to Sign Up.", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "Error to Sign Up.", Toast.LENGTH_SHORT, true).show();
 
             }
         }) {

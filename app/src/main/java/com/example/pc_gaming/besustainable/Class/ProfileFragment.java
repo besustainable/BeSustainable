@@ -35,6 +35,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 public class ProfileFragment extends Fragment {
 
     TextView tvDescription, tvEmail, tvNick, tvCityName;
@@ -140,7 +142,7 @@ public class ProfileFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT,true).show();
                 }
 
             }
@@ -148,7 +150,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getContext(), "Error to load the Profile Image.", Toast.LENGTH_SHORT).show();
+                Toasty.error(getContext(), "Error to load the Profile Image.", Toast.LENGTH_SHORT, true).show();
 
             }
         }) {

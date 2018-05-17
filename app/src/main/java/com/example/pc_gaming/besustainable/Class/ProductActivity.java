@@ -134,7 +134,7 @@ public class ProductActivity extends AppCompatActivity {
                 try {
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
@@ -151,7 +151,7 @@ public class ProductActivity extends AppCompatActivity {
                 try {
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
@@ -168,7 +168,7 @@ public class ProductActivity extends AppCompatActivity {
                 try {
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
@@ -186,7 +186,7 @@ public class ProductActivity extends AppCompatActivity {
                 try {
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
@@ -209,7 +209,7 @@ public class ProductActivity extends AppCompatActivity {
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Send email..."));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(),"You don't have this application installed.", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
@@ -277,7 +277,7 @@ public class ProductActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }

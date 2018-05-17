@@ -89,7 +89,7 @@ public class PasswordActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -97,7 +97,7 @@ public class PasswordActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), "Error to update the Password!", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "Error to update the Password!", Toast.LENGTH_SHORT, true).show();
 
             }
         }) {

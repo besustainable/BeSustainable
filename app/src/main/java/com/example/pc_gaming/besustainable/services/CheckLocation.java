@@ -9,6 +9,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.pc_gaming.besustainable.Class.VolleySingleton;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
@@ -42,20 +48,20 @@ public class CheckLocation extends Thread implements LocationListener {
 
         while (!interrupted()) {
             userLocation = getLastKnownLocation();
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+          /*  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println("User Latitud " + userLocation.getLatitude());
             System.out.println("User Longitud " + userLocation.getLongitude());
             System.out.println("User Altitude " + userLocation.getAltitude());
             System.out.println("User Accuracy " + userLocation.getAccuracy());
             System.out.println("User Provider " + userLocation.getProvider());
             System.out.println("User Speed " + userLocation.getSpeed());
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");*/
 
             /**
              * Creo objeto json para poder enviarlo al servidor con el formato correcto.
              *
              * Debe tener esta estructura.
-             *      deviceid: CÃ³difo Firebase para enviar notificaciÃ³n.
+             *      deviceid: Códifo Firebase para enviar notificación.
              *      location: {"type":"Point","coordinates":[longitud,latitud]}
              *
              *
@@ -70,7 +76,6 @@ public class CheckLocation extends Thread implements LocationListener {
                 location.put("type", "Point");
                 location.put("coordinates", coordinates);
                 Map userLocation = new HashMap();
-                // userLocation.put("deviceid", FirebaseInstanceId.getInstance().getToken());
                 userLocation.put("location", new JSONObject(location));
                 userLocation.put("deviceid", FirebaseInstanceId.getInstance().getToken());
 
@@ -78,12 +83,55 @@ public class CheckLocation extends Thread implements LocationListener {
                 System.out.println(new JSONObject(userLocation));
 
                 /**
-                 *  bucle que calcula localización y la enviará¡ a servidor Node
+                 *  bucle que calcula localización y la enviará a servidor Node
                  *  Programada cada 10 segundo e imprime por consola
                  * Pendiente programar peticion con volley
                  * Pendiente programar lado de servidor.
                  *
                  * */
+
+                final String URL = "http://80.211.191.91:3001/updateLocation";
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(userLocation), new Response.Listener<JSONObject>() {
+
+
+                    public void onResponse(JSONObject response) {
+
+                        try {
+
+                            //RECUPERO TODO EL ARCHVIO JSON
+                            JSONObject json = new JSONObject(response.toString(0));
+                            System.out.println(json.toString());
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            System.out.println("Error formato Json");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        System.out.println("ERROR: El servidor Node no esta corriendo");
+
+                    }
+
+                }) {
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("User-agent", "My useragent");
+                        return headers;
+                    }
+
+                };
+
+                VolleySingleton.getInstance(context).addToRequestQueue(jsonObjReq);
+
                 sleep(10000);
 
             } catch (JSONException e) {

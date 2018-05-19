@@ -3,17 +3,19 @@ include 'conn.php';
 
 $json=array();
 
-	$PRODUCTS_PER_LOAD = 20;
 
+//RECUPERO EL PRODUCTO MINIMO Y MAXIMO 
+	// TEST //
+	/*
+	$minProduct = 0;
+	$maxProduct = 20;
+	$satisfaction = "";
+	$economics = "";
+	$totalvote = "";
+	$city = "";
+	*/
+	
 	$limit = $_POST["limit"];
-	$satisfaction = $_POST["satisfaction"];
-	$economics = $_POST["economics"];
-	$totalvote = $_POST["totalvote"];
-	$city = $_POST["city"];
-	$name = $_POST["name"];
-	$category = $_POST["category"];
-	
-	
 
 	$conn = mysqli_connect($hostname_localhost,$username_localhost,$password_localhost,$database_localhost);
 
@@ -25,35 +27,16 @@ $json=array();
 				"AND pl.idhq = hq.idhq ".
 				"AND cty.idcity = hq.idcity ";
 
-	filters();
+	//filters();
 
 	$sql .=		"order by p.idproduct ".
-				"limit ".$limit.", ".$PRODUCTS_PER_LOAD;
+				"limit ".$limit.", 20";
 
 	$resultado = mysqli_query($conn, $sql);
 
 	while($registro = mysqli_fetch_array($resultado)){
 		
-		$result["idproduct"] = $registro['idproduct'];
-		$result["idplant"] = $registro['idplant'];
-		$result["idcategory"] = $registro['idcategory'];
 		$result["name"] = utf8_encode($registro['name']);
-		$result["description"] = utf8_encode($registro['description']); 
-		$result["weight"] = $registro['weight']; 
-		$result["pvp"] = $registro['pvp']; 
-		$result["img"] = base64_encode($registro['img']); 
-		$result["sustainableAVG"] = $registro['sustainableAVG']; 
-		$result["EconomyAVG"] = $registro['EconomyAVG']; 
-		$result["satisfactionAVG"] = $registro['satisfactionAVG']; 
-		$result["fairtrade"] = $registro['fairtrade']; 
-		$result["ecology"] = $registro['ecology']; 
-		$result["local"] = $registro['local']; 
-		$result["besustainable"] = $registro['besustainable']; 
-		$result["origin"] = utf8_encode($registro['origin']); 
-		$result["Category_Name"] = utf8_encode($registro['NAME_CATEGORY']); 
-		$result["Measure"] = utf8_encode($registro['MEASURE']); 
-		$result["Plant_Name"] = utf8_encode($registro['PLANT_NAME']); 
-		$result["Hq_Name"] = utf8_encode($registro['NAME_HQ']); 
 		$json['product'][] = $result;
 	}
 		mysqli_close($conn);

@@ -1,34 +1,26 @@
 package com.example.pc_gaming.besustainable.Class;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.pc_gaming.besustainable.Adapters.ProductsAdapter;
+import com.example.pc_gaming.besustainable.Adapters.MyInfiniteListAdapter;
 import com.example.pc_gaming.besustainable.Entity.Product;
 import com.example.pc_gaming.besustainable.Interface.CustomRequest;
-import com.example.pc_gaming.besustainable.Interface.ILoadMore;
-import com.example.pc_gaming.besustainable.Interface.OnItemClickListener;
 import com.example.pc_gaming.besustainable.R;
+import com.softw4re.views.InfiniteListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,12 +37,18 @@ import es.dmoral.toasty.Toasty;
 public class ListFragment extends Fragment{
 
     // Main Variables
-    ArrayList<Product> listProducts;
-    RecyclerView rvProductsList;
-    ProgressBar pbLoadProducts;
-    int minProduct = 0;
-    int maxProduct = 0;
-    int maxNumProducts = 61;
+    private LinearLayout container;
+    private InfiniteListView<Product> infiniteListView;
+
+    private ArrayList<Product> itemList;
+    private MyInfiniteListAdapter<Product> adapter;
+
+    int limit = 0;
+    int maxNumProducts = 0;
+    /**
+     * Set the list number products in each load
+     */
+    final int NUMBER_LOAD_PRODUCTS = 20;
 
     // Volley JsonObjectRequest Post request working with this helper Class
     CustomRequest customRequest;
@@ -64,6 +62,8 @@ public class ListFragment extends Fragment{
     String name = "";
     String category = "";
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,12 +71,17 @@ public class ListFragment extends Fragment{
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_list, container, false);
 
-        listProducts = new ArrayList<Product>();
+        // Set Max Number of Products in the List
+        setSizeList();
 
-        pbLoadProducts = rootView.findViewById(R.id.pbLoadProducts);
-        rvProductsList = rootView.findViewById(R.id.rvProductsList);
-        rvProductsList.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        rvProductsList.setHasFixedSize(true);
+        infiniteListView = (InfiniteListView) rootView.findViewById(R.id.infiniteListView);
+
+        itemList = new ArrayList<Product>();
+        adapter = new MyInfiniteListAdapter(this, R.layout.item_products_list, itemList);
+
+        infiniteListView.setAdapter(adapter);
+
+        infiniteListView.startLoading();
 
         if(getArguments() != null){
             //Arguments from FilterActivity
@@ -90,21 +95,15 @@ public class ListFragment extends Fragment{
             category = getArguments().getString("category").toString();
         }
 
-
-        cargarWebService();
-
+        loadProducts();
         // Inflate the layout for this fragment
         return rootView;
     }
 
-    public void cargarWebService(){
-/*
-        progress=new ProgressDialog(getApplicationContext());
-        progress.setMessage("Consultando...");
-        progress.show();
-        */
+    public void loadProducts(){
 
-        sacarMaxyMin();
+
+        infiniteListView.startLoading();
 
         String url = getString(R.string.ip) + "/beSustainable/loadProducts.php";
 
@@ -119,8 +118,8 @@ public class ListFragment extends Fragment{
                 try {
 
                     for(int i = 0; i < json.length(); i++){
-                        JSONObject jsonObject = json.getJSONObject(i);
 
+                        JSONObject jsonObject = json.getJSONObject(i);
 
                         Product product = new Product();
                         product.setIdProduct(jsonObject.getInt("idproduct"));
@@ -140,60 +139,21 @@ public class ListFragment extends Fragment{
                         product.setSustainableAVG(Double.parseDouble(sustainableAVG.replace(',', '.')));
                         product.setEconomyAVG(jsonObject.getInt("EconomyAVG"));
                         product.setSatisfactionAVG(jsonObject.getInt("satisfactionAVG"));
-                        listProducts.add(product);
-
+                        itemList.add(product);
+                        //infiniteListView.addNewItem(product);
                     }
-                    //progress.hide();
-                    final ProductsAdapter adapter = new ProductsAdapter(rvProductsList, getActivity(), listProducts, new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Product item) {
-                            Intent i = new Intent(getActivity(), ProductActivity.class);
 
-                            // I can't put the object because the image needs a special method for catch from the other side...
-                            i.putExtra("imageProduct", item.getImg());
-                            i.putExtra("nameProduct", item.getName().toString());
-                            i.putExtra("categoryProduct", item.getIdCategory());
-                            i.putExtra("pvpProduct", item.getPvp());
-                            i.putExtra("weightProduct", item.getWeight());
-                            i.putExtra("descriptionProduct", item.getDescription().toString());
-                            i.putExtra("category_name", item.getCategoryName().toString());
-                            i.putExtra("measure", item.getMeasure().toString());
-                            i.putExtra("plant_name", item.getPlantName().toString());
-                            i.putExtra("hq_name", item.getHqName().toString());
-                            i.putExtra("satisfactionRate", item.getSatisfactionAVG());
-                            i.putExtra("economyRate", item.getEconomyAVG());
-                            i.putExtra("idproduct", String.valueOf(item.getIdProduct()));
-                            i.putExtra("sustainableAVG", String.valueOf(item.getSustainableAVG()));
-                            startActivity(i);
-                        }
-                    });
-                    rvProductsList.setAdapter(adapter);
-                    pbLoadProducts.setVisibility(View.INVISIBLE);
+                    // SOY UN PUTO GENIO!
+                    if(limit == 0)
+                        infiniteListView.setAdapter(adapter);
 
-                    // Set Load More Event
-                    if(json.length() > 5)   // Implement for jump the bug with the loader
-                        adapter.setLoadMore(new ILoadMore() {
-                            @Override
-                            public void onLoadMore() {
-                                if(listProducts.size() < maxNumProducts) {     //Max Items in List
-                                    listProducts.add(null);
-                                    adapter.notifyItemInserted(listProducts.size());
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
+                    limit += NUMBER_LOAD_PRODUCTS;
+                    infiniteListView.stopLoading();
 
-                                            cargarWebService();
-                                            adapter.notifyDataSetChanged();
-                                            adapter.setLoaded();
-
-                                        }
-                                    }, 2000);
-                                }else{
-                                    //Toasty.success(getContext(), "Load Data Completed!", Toast.LENGTH_SHORT, true).show();
-                                }
-                            }
-                        });
-
+                    if(limit < maxNumProducts)
+                        infiniteListView.hasMore(true);
+                    else
+                        infiniteListView.hasMore(false);
 
                 } catch (JSONException e) {
                     Toasty.error(getContext(), "Error al cargar los Productos...", Toast.LENGTH_SHORT, true).show();
@@ -207,9 +167,7 @@ public class ListFragment extends Fragment{
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toasty.error(getContext(), "No es posible conectarse. ", Toast.LENGTH_LONG, true).show();
-                System.out.println();
-                pbLoadProducts.setVisibility(View.INVISIBLE);
+                Toasty.error(getContext(), "Cannot connect. ", Toast.LENGTH_LONG, true).show();
                 Log.d("ERROR: ", error.toString());
                 //progress.hide();
 
@@ -223,41 +181,98 @@ public class ListFragment extends Fragment{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("minProduct", String.valueOf(minProduct));
-                params.put("maxProduct", String.valueOf(maxProduct));
+                params.put("limit", String.valueOf(limit));
                 params.put("satisfaction", satisfaction);
                 params.put("economics", economics);
                 params.put("totalvote", totalvote);
                 params.put("city", city);
                 params.put("name", name);
                 params.put("category", category);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(customRequest);
+    }
 
+    //DO THIS ON SWIPE-REFRESH
+    public void refreshList() {
+        limit = 0;
+        infiniteListView.clearList();
+        loadProducts();
+    }
+
+    //DO THIS ON ITEM CLICK
+    public void clickItem(int position) {
+        Intent i = new Intent(getActivity(), ProductActivity.class);
+        Product item = itemList.get(position);
+
+        // I can't put the object because the image needs a special method for catch from the other side...
+        i.putExtra("imageProduct", item.getImg());
+        i.putExtra("nameProduct", item.getName().toString());
+        i.putExtra("categoryProduct", item.getIdCategory());
+        i.putExtra("pvpProduct", item.getPvp());
+        i.putExtra("weightProduct", item.getWeight());
+        i.putExtra("descriptionProduct", item.getDescription().toString());
+        i.putExtra("category_name", item.getCategoryName().toString());
+        i.putExtra("measure", item.getMeasure().toString());
+        i.putExtra("plant_name", item.getPlantName().toString());
+        i.putExtra("hq_name", item.getHqName().toString());
+        i.putExtra("satisfactionRate", item.getSatisfactionAVG());
+        i.putExtra("economyRate", item.getEconomyAVG());
+        i.putExtra("idproduct", String.valueOf(item.getIdProduct()));
+        i.putExtra("sustainableAVG", String.valueOf(item.getSustainableAVG()));
+        startActivity(i);
+    }
+
+    //DO THIS ON ITEM LONG-CLICK
+    public void longClickItem(int position) {
+        Snackbar.make(container, "Item long-clicked: " + position, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void setSizeList(){
+
+        String url = getString(R.string.ip) + "/beSustainable/getSizeList.php";
+
+        //Toast.makeText(getContext(), url, Toast.LENGTH_SHORT).show();
+
+        customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    maxNumProducts = Integer.parseInt(response.getString("size"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toasty.error(getContext(), "Cannot connect.", Toast.LENGTH_LONG, true).show();
+                Log.d("ERROR: ", error.toString());
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("satisfaction", satisfaction);
+                params.put("economics", economics);
+                params.put("totalvote", totalvote);
+                params.put("city", city);
+                params.put("name", name);
+                params.put("category", category);
                 return params;
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(customRequest);
 
-    }
-
-    private void sacarMaxyMin(){
-
-        if(maxProduct + 20 >= maxNumProducts){   // Max Variable
-            maxProduct = maxNumProducts;
-        }else
-            maxProduct += 20;
-
-        if(maxProduct == maxNumProducts){
-            int resto = 0;
-            while(resto >= 0){
-                resto = maxNumProducts - 20;
-                if(resto < 20)
-                    break;
-            }
-            minProduct = resto;
-        }else if(maxProduct == 20)
-            minProduct = 0;
-        else
-            minProduct += 20;
     }
 
 }

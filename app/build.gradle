@@ -46,6 +46,8 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:3.6.0'
     //Toasty
     implementation 'com.github.GrenderG:Toasty:1.3.0'
+    // INFINITE SCROLL
+    compile 'com.github.ugurcany:InfiniteListView:1.1.1'
 
 }
 

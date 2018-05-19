@@ -10,31 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvProductsList"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+        <com.softw4re.views.InfiniteListView
+            android:id="@+id/infiniteListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:swipeRefreshIndicatorColor="@color/colorPrimary"
+            app:scrollbarVisible="true"
+            app:dividerVisible="true" />
 
-        </android.support.v7.widget.RecyclerView>
 
-        <ProgressBar
-            android:id="@+id/pbLoadProducts"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="80dp"
-            android:layout_height="73dp"
-            android:layout_marginEnd="8dp"
-            android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="8dp" />
     </android.support.constraint.ConstraintLayout>
 
 

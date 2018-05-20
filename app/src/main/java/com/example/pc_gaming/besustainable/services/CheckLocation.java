@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,6 +25,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 public class CheckLocation extends Thread implements LocationListener {
 
@@ -45,100 +48,103 @@ public class CheckLocation extends Thread implements LocationListener {
 
     public void run() {
 
+        if (!locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            // Call your Alert message
+            //Toasty.warning(context, "Your GPS must be enabled!", Toast.LENGTH_SHORT, true).show();
+        }else{
 
-        while (!interrupted()) {
-            userLocation = getLastKnownLocation();
-          /*  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println("User Latitud " + userLocation.getLatitude());
-            System.out.println("User Longitud " + userLocation.getLongitude());
-            System.out.println("User Altitude " + userLocation.getAltitude());
-            System.out.println("User Accuracy " + userLocation.getAccuracy());
-            System.out.println("User Provider " + userLocation.getProvider());
-            System.out.println("User Speed " + userLocation.getSpeed());
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");*/
+            while (!interrupted()) {
+
+                userLocation = getLastKnownLocation();
+                updateLocation();
+                /**
+                 * Creo objeto json para poder enviarlo al servidor con el formato correcto.
+                 *
+                 * Debe tener esta estructura.
+                 *      deviceid: Códifo Firebase para enviar notificación.
+                 *      location: {"type":"Point","coordinates":[longitud,latitud]}
+                 *
+                 *
+                 *      {"deviceid":"FirebaseInstanceId.getInstance().getToken()",
+                 *      "location":{"type":"Point","coordinates":[-5.536009478520926,50.12250890459046]}
+                 *      }
+                 */
+
+            }
+        }
+    }
+
+    public void updateLocation(){
+
+        try {
+            double[] lonlat = {userLocation.getLongitude(), userLocation.getLatitude()};
+            JSONArray coordinates = new JSONArray(lonlat);
+            Map location = new HashMap();
+            location.put("type", "Point");
+            location.put("coordinates", coordinates);
+            Map userLocation = new HashMap();
+            userLocation.put("location", new JSONObject(location));
+            userLocation.put("deviceid", FirebaseInstanceId.getInstance().getToken());
+
+
+            System.out.println(new JSONObject(userLocation));
 
             /**
-             * Creo objeto json para poder enviarlo al servidor con el formato correcto.
+             *  bucle que calcula localización y la enviará a servidor Node
+             *  Programada cada 10 segundo e imprime por consola
+             * Pendiente programar peticion con volley
+             * Pendiente programar lado de servidor.
              *
-             * Debe tener esta estructura.
-             *      deviceid: Códifo Firebase para enviar notificación.
-             *      location: {"type":"Point","coordinates":[longitud,latitud]}
-             *
-             *
-             *      {"deviceid":"FirebaseInstanceId.getInstance().getToken()",
-             *      "location":{"type":"Point","coordinates":[-5.536009478520926,50.12250890459046]}
-             *      }
-             */
-            try {
-                double[] lonlat = {userLocation.getLongitude(), userLocation.getLatitude()};
-                JSONArray coordinates = new JSONArray(lonlat);
-                Map location = new HashMap();
-                location.put("type", "Point");
-                location.put("coordinates", coordinates);
-                Map userLocation = new HashMap();
-                userLocation.put("location", new JSONObject(location));
-                userLocation.put("deviceid", FirebaseInstanceId.getInstance().getToken());
+             * */
+
+            final String URL = "http://80.211.191.91:3001/updateLocation";
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(userLocation), new Response.Listener<JSONObject>() {
 
 
-                System.out.println(new JSONObject(userLocation));
+                public void onResponse(JSONObject response) {
 
-                /**
-                 *  bucle que calcula localización y la enviará a servidor Node
-                 *  Programada cada 10 segundo e imprime por consola
-                 * Pendiente programar peticion con volley
-                 * Pendiente programar lado de servidor.
-                 *
-                 * */
+                    try {
 
-                final String URL = "http://80.211.191.91:3001/updateLocation";
-                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(userLocation), new Response.Listener<JSONObject>() {
-
-
-                    public void onResponse(JSONObject response) {
-
-                        try {
-
-                            //RECUPERO TODO EL ARCHVIO JSON
-                            JSONObject json = new JSONObject(response.toString(0));
-                            System.out.println(json.toString());
+                        //RECUPERO TODO EL ARCHVIO JSON
+                        JSONObject json = new JSONObject(response.toString(0));
+                        System.out.println(json.toString());
 
 
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            System.out.println("Error formato Json");
-                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("Error formato Json");
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        System.out.println("ERROR: El servidor Node no esta corriendo");
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    System.out.println("ERROR: El servidor Node no esta corriendo");
 
-                    }
+                }
 
-                }) {
+            }) {
 
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Content-Type", "application/json; charset=utf-8");
-                        headers.put("User-agent", "My useragent");
-                        return headers;
-                    }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    headers.put("User-agent", "My useragent");
+                    return headers;
+                }
 
-                };
+            };
 
-                VolleySingleton.getInstance(context).addToRequestQueue(jsonObjReq);
+            VolleySingleton.getInstance(context).addToRequestQueue(jsonObjReq);
 
-                sleep(10000);
+            sleep(10000);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }

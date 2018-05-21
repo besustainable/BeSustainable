@@ -15,17 +15,22 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.pc_gaming.besustainable.Entity.Consumer;
 import com.example.pc_gaming.besustainable.Interface.CustomRequest;
 import com.example.pc_gaming.besustainable.R;
@@ -41,8 +46,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
@@ -54,6 +61,8 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
     EditText etNickEdit, etDescriptionEdit, etEmailEdit, etBirthdayEdit;
     ImageView ivProfileEdit, ivbtnImageEdit;
     Button btnUpdate, btnPassword;
+    Spinner spinnerCountries;
+    AutoCompleteTextView autoetEditCity;
 
     static int GET_FROM_GALLERY = 3;
 
@@ -62,6 +71,8 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
 
     //Global Variables
     String ID_CONSUMER, gender, nick, description, city, email, birthday;
+
+    ArrayAdapter<String> adapterCities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +93,11 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
         ivbtnImageEdit = findViewById(R.id.ivbtnImageEdit);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnPassword = findViewById(R.id.btnPassword);
+        spinnerCountries = findViewById(R.id.spinnerCountry);
+        autoetEditCity = findViewById(R.id.autoetEditCity);
+
+        //Disabled EtCity by default
+        autoetEditCity.setEnabled(false);
 
         loadDataConsumerPreferences();
 
@@ -169,7 +185,33 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
             }
         });
 
+        // Load the Countries in the Spinner
 
+        //List of Countries
+        final List<String> listCountries = loadCountries();
+
+
+        adapterCities = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCountries);
+        adapterCities.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCountries.setAdapter(adapterCities);
+
+
+        spinnerCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //Toast.makeText(getApplicationContext(), listCountries.get(i).toUpperCase(), Toast.LENGTH_SHORT).show();
+                /**
+                 * TO DO:
+                 * loadCities() method
+                 */
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
     }
 
@@ -425,6 +467,50 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(customRequest);
 
     }
+
+    public List<String> loadCountries(){
+
+        String url = getString(R.string.ip) + "/beSustainable/loadCountries.php";
+
+        final List<String> list = new ArrayList<String>();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                JSONArray jsonArray = response.optJSONArray("countries");
+
+                try {
+
+                    for (int i = 0; i < jsonArray.length(); i++){
+
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                        String country = jsonObject.getString("idcountry");
+                        list.add(country);
+                    }
+
+                    //Notify the adapter
+                    adapterCities.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        //Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+        return list;
+
+    }
+
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

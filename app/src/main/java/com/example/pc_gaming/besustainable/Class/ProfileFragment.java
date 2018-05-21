@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -85,6 +86,15 @@ public class ProfileFragment extends Fragment {
             setTextViewConsumerFields(consumer);
 
         }
+
+        switchNewsletter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                updateNewsletter();
+                updateSharedPreferences();
+            }
+        });
+
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -168,6 +178,81 @@ public class ProfileFragment extends Fragment {
 
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(customRequest);
+
+    }
+
+    public void updateNewsletter(){
+
+
+        // Request for load the Consumer Image
+        String url = getString(R.string.ip) + "/beSustainable/updateNewsletter.php";
+
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+
+                    String message = response.getString("message");
+
+                    if(message.contains("success"))
+                        Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                    else
+                        Toasty.error(getContext(), message, Toast.LENGTH_SHORT, true).show();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toasty.error(getContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT,true).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toasty.error(getContext(), "Error to Update the Newsletter.", Toast.LENGTH_SHORT, true).show();
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idconsumer", ID_CONSUMER);
+                params.put("newsletter", String.valueOf(switchNewsletter.isChecked()));
+                return params;
+            }
+
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(customRequest);
+
+    }
+
+    public void updateSharedPreferences(){
+
+        // Get the latest Shared Preferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Consumer", "");
+        Consumer consumer = gson.fromJson(json, Consumer.class);
+
+        //New SP object for updated
+        SharedPreferences mPrefs = getContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gsonEdit = new Gson();
+
+        //Sets
+        consumer.setNewsletter(switchNewsletter.isChecked());
+
+        //Cast to Json & Commit
+        String jsonEdit = gsonEdit.toJson(consumer);
+        prefsEditor.putString("Consumer", jsonEdit);
+        prefsEditor.commit();
 
     }
 

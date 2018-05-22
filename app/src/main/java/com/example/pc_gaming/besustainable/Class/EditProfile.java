@@ -31,6 +31,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.pc_gaming.besustainable.Entity.City;
 import com.example.pc_gaming.besustainable.Entity.Consumer;
 import com.example.pc_gaming.besustainable.Interface.CustomRequest;
 import com.example.pc_gaming.besustainable.R;
@@ -72,7 +73,14 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
     //Global Variables
     String ID_CONSUMER, gender, nick, description, city, email, birthday;
 
+    //Adapters for AutoComplete & Spinner component
     ArrayAdapter<String> adapterCities;
+    ArrayAdapter<String> adapterCountries;
+
+    //Cities List
+    List<City> listCities;
+    List<String> listCitiesAdapter;
+    String idcountry = "ES";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +105,7 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
         autoetEditCity = findViewById(R.id.autoetEditCity);
 
         //Disabled EtCity by default
-        autoetEditCity.setEnabled(false);
+        //autoetEditCity.setEnabled(false);
 
         loadDataConsumerPreferences();
 
@@ -190,10 +198,17 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
         //List of Countries
         final List<String> listCountries = loadCountries();
 
+        // AutoComplete
+        listCities = new ArrayList<City>();
+        listCitiesAdapter = loadCities();
+        autoetEditCity.setThreshold(3);
+        adapterCities = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listCitiesAdapter);
+        autoetEditCity.setAdapter(adapterCities);
 
-        adapterCities = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCountries);
-        adapterCities.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCountries.setAdapter(adapterCities);
+        //Spinner
+        adapterCountries = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCountries);
+        adapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCountries.setAdapter(adapterCountries);
 
 
         spinnerCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -201,10 +216,9 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 //Toast.makeText(getApplicationContext(), listCountries.get(i).toUpperCase(), Toast.LENGTH_SHORT).show();
-                /**
-                 * TO DO:
-                 * loadCities() method
-                 */
+                listCities.clear();
+                idcountry = listCountries.get(i).toUpperCase();
+                loadCities();
             }
 
             @Override
@@ -491,7 +505,7 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
                     }
 
                     //Notify the adapter
-                    adapterCities.notifyDataSetChanged();
+                    adapterCountries.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -502,11 +516,80 @@ public class EditProfile extends AppCompatActivity implements DatePickerDialog.O
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toasty.error(getApplicationContext(), "Error to load Countries...", Toast.LENGTH_SHORT, true).show();
             }
         });
         //Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+        return list;
+
+    }
+
+    public List<String> loadCities(){
+
+        // Request for load the Consumer Image
+        String url = getString(R.string.ip) + "/beSustainable/loadCities.php";
+
+        final List<String> list = new ArrayList<String>();
+
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+
+                    JSONArray jsonArray = response.getJSONArray("cities");
+
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        //Add List to DropDown AutoCOmplete
+                        list.add(jsonObject.getString("name"));
+
+                        //Add to List<>
+                        City city = new City();
+                        city.setName(jsonObject.getString("name"));
+                        city.setIdCity(jsonObject.getInt("idcity"));
+                        listCities.add(city);
+
+                    }
+
+                    //Notify the adapter
+                    //adapterCities.notifyDataSetChanged();
+                    adapterCities.clear();
+                    adapterCities.addAll(list);
+                    adapterCities.getFilter().filter(autoetEditCity.getText(), null);
+
+                    //autoetEditCity.setAdapter(adapterCities);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toasty.error(getApplicationContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toasty.error(getApplicationContext(), "Error to load the Cities.", Toast.LENGTH_SHORT, true).show();
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idcountry", idcountry);
+                return params;
+            }
+
+        };
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(customRequest);
         return list;
 
     }
